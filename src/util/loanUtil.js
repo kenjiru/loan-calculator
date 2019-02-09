@@ -1,7 +1,6 @@
 import _ from 'lodash';
-import numeral from 'numeral';
 
-export function getLoanData(principal, interest, period) {
+export function getLoanData(principal, interest, period, fixPeriod, variableInterest) {
     let totalInterest = 0;
     let fixPeriodInterest = 0;
     let monthlyRate = calculateMonthlyRate(principal, interest, period);
@@ -9,28 +8,27 @@ export function getLoanData(principal, interest, period) {
     const monthlyData = _
         .range(period)
         .map(index => {
-            if (index === 12 * 15 + 1) {
-                interest = 0.01;
+            if (index === fixPeriod + 1) {
+                interest = variableInterest;
                 monthlyRate = calculateMonthlyRate(principal, interest, period - index);
             }
 
-            /*      if (index === 12 * 15 + 2) {
-                  principal -= 150000;
-                  monthlyRate = calculateMonthlyRate(principal, interest, period - index - 1);
-                     }
-                  */
+            // if (index === 12 * 15 + 2) {
+            //     principal -= 150000;
+            //     monthlyRate = calculateMonthlyRate(principal, interest, period - index - 1);
+            // }
 
-            /*       if (index / 12 > 0 && index / 12 <= 15 && index % 12 === 0 ) {
-                  principal -= 10000;
-                  monthlyRate = calculateMonthlyRate(principal, interest, period - index - 1);
-                     }
-                   */
+            // if (index / 12 > 0 && index / 12 <= 15 && index % 12 === 0) {
+            //     principal -= 10000;
+            //     monthlyRate = calculateMonthlyRate(principal, interest, period - index);
+            // }
+
             const currentMonthInterest = interest / 12 * principal;
             const currentMonthPrincipal = monthlyRate - currentMonthInterest;
 
             principal -= currentMonthPrincipal;
 
-            if (index < 15 * 12) {
+            if (index < fixPeriod) {
                 fixPeriodInterest += currentMonthInterest;
             }
 
@@ -50,10 +48,6 @@ export function getLoanData(principal, interest, period) {
         totalInterest,
         fixPeriodInterest,
     };
-}
-
-export function formatNumber(value) {
-    return numeral(value).format('0,0.00');
 }
 
 export function calculateMonthlyRate(principal, interest, period) {
