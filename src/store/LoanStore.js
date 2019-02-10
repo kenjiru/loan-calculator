@@ -8,6 +8,11 @@ export const loanStore = observable({
     fixDuration: 0,
     variableInterest: 0,
 
+    monthlyFee: 0,
+    contractFee: 0,
+    evaluationFee: 0,
+    landRegistryFee: 0,
+
     monthlyData: [],
     totalInterest: 0,
     fixPeriodInterest: 0,
@@ -26,4 +31,12 @@ export function updateLoanDetails() {
     loanStore.monthlyData = result.monthlyData;
     loanStore.totalInterest = result.totalInterest;
     loanStore.fixPeriodInterest = result.fixPeriodInterest;
+}
+
+export function updateTotalLoanCost() {
+    loanStore.totalLoanCost = loanStore.totalInterest +
+        parseFloat(loanStore.monthlyFee) * parseInt(loanStore.duration) * 12 +
+        parseFloat(loanStore.contractFee) +
+        parseFloat(loanStore.evaluationFee) +
+        parseFloat(loanStore.landRegistryFee);
 }

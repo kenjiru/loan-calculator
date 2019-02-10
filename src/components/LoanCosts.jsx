@@ -8,6 +8,7 @@ export const LoanCosts = ({ loanStore }) => (
         <h4>Loan final cost</h4>
         <div>Total interest: {formatAmount(loanStore.totalInterest)}</div>
         <div>Fixed period interest: {formatAmount(loanStore.fixPeriodInterest)}</div>
+        <div>Total loan cost: {formatAmount(loanStore.totalLoanCost)}</div>
     </Container>
 );
 
