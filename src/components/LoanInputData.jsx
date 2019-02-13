@@ -39,8 +39,31 @@ class LoanInputData extends Component {
                             </InputGroupAddon>
                             <Input
                                 placeholder="Loan amount"
-                                value={loanStore.amount}
-                                onChange={this.handleAmountChange}
+                                value={loanStore.purchasePrice}
+                                onChange={this.handlePurchasePriceChange}
+                            />
+                        </InputGroup>
+                    </Col>
+                </Row>
+
+                <Row className="mb-2">
+                    <Col sm="3">
+                        <Label>Own capital</Label>
+                    </Col>
+                    <Col sm="9">
+                        <InputGroup>
+                            <InputGroupAddon addonType="prepend">
+                                <InputGroupText>
+                                    <FontAwesomeIcon
+                                        icon="euro-sign"
+                                        size="sm"
+                                    />
+                                </InputGroupText>
+                            </InputGroupAddon>
+                            <Input
+                                placeholder="Own capital"
+                                value={loanStore.ownCapital}
+                                onChange={this.handleOwnCapitalChange}
                             />
                         </InputGroup>
                     </Col>
@@ -139,10 +162,18 @@ class LoanInputData extends Component {
         );
     }
 
-    handleAmountChange = (ev) => {
+    handlePurchasePriceChange = (ev) => {
         const { loanStore } = this.props;
 
-        loanStore.amount = ev.target.value;
+        loanStore.purchasePrice = ev.target.value;
+
+        updateLoanDetails();
+    };
+
+    handleOwnCapitalChange = (ev) => {
+        const { loanStore } = this.props;
+
+        loanStore.ownCapital = ev.target.value;
 
         updateLoanDetails();
     };
