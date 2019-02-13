@@ -63,7 +63,26 @@ class Fees extends Component {
                     <Col sm="4">
                         <Label>Contract Fee</Label>
                     </Col>
-                    <Col sm="4">
+
+                    <Col sm="3">
+                        <InputGroup>
+                            <InputGroupAddon addonType="prepend">
+                                <InputGroupText>
+                                    <FontAwesomeIcon
+                                        icon="percent"
+                                        size="sm"
+                                    />
+                                </InputGroupText>
+                            </InputGroupAddon>
+                            <Input
+                                placeholder="Interest rate"
+                                value={loanStore.contractFeePercentage}
+                                onChange={this.handleContractFeePercentageChange}
+                            />
+                        </InputGroup>
+                    </Col>
+
+                    <Col sm={{size: 4, offset: 1}}>
                         <InputGroup>
                             <InputGroupAddon addonType="prepend">
                                 <InputGroupText>
@@ -87,7 +106,25 @@ class Fees extends Component {
                         <Label>Property evaluation fee</Label>
                     </Col>
 
-                    <Col sm="4">
+                    <Col sm="3">
+                        <InputGroup>
+                            <InputGroupAddon addonType="prepend">
+                                <InputGroupText>
+                                    <FontAwesomeIcon
+                                        icon="percent"
+                                        size="sm"
+                                    />
+                                </InputGroupText>
+                            </InputGroupAddon>
+                            <Input
+                                placeholder="Interest rate"
+                                value={loanStore.evaluationFeePercentage}
+                                onChange={this.handleEvaluationFeePercentageChange}
+                            />
+                        </InputGroup>
+                    </Col>
+
+                    <Col sm={{size: 4, offset: 1}}>
                         <InputGroup>
                             <InputGroupAddon addonType="prepend">
                                 <InputGroupText>
@@ -153,10 +190,26 @@ class Fees extends Component {
         updateLoanDetails();
     };
 
+    handleContractFeePercentageChange = (ev) => {
+        const { loanStore } = this.props;
+
+        loanStore.contractFeePercentage = ev.target.value;
+
+        updateLoanDetails();
+    };
+
     handleEvaluationFeeChange = (ev) => {
         const { loanStore } = this.props;
 
         loanStore.evaluationFee = ev.target.value;
+
+        updateLoanDetails();
+    };
+
+    handleEvaluationFeePercentageChange = (ev) => {
+        const { loanStore } = this.props;
+
+        loanStore.evaluationFeePercentage = ev.target.value;
 
         updateLoanDetails();
     };
