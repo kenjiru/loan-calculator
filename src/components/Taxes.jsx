@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import {
     Col,
     Container,
-    Input,
+    Input, InputGroup, InputGroupAddon, InputGroupText,
     Label,
     Row,
 } from 'reactstrap';
 import { inject, observer } from 'mobx-react';
 import { updateLoanDetails } from 'src/store/LoanStore.js';
 import { formatAmount } from 'src/util/amountUtil.js';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class Taxes extends Component {
     render() {
@@ -47,28 +48,50 @@ class Taxes extends Component {
                 </Row>
 
                 <Row className="mb-2">
-                    <Col sm="3">
+                    <Col sm="6">
                         <Label>Notary fee</Label>
                     </Col>
 
-                    <Col sm="3">
-                        <Input
-                            placeholder="Notarial fee"
-                            value={loanStore.notaryFee}
-                            onChange={this.handleNotaryFeeChange}
-                        />
+                    <Col sm="4">
+                        <InputGroup>
+                            <InputGroupAddon addonType="prepend">
+                                <InputGroupText>
+                                    <FontAwesomeIcon
+                                        icon="euro-sign"
+                                        size="sm"
+                                    />
+                                </InputGroupText>
+                            </InputGroupAddon>
+                            <Input
+                                placeholder="Notarial fee"
+                                value={loanStore.notaryFee}
+                                onChange={this.handleNotaryFeeChange}
+                            />
+                        </InputGroup>
                     </Col>
+                </Row>
 
-                    <Col sm="3">
+                <Row className="mb-2">
+                    <Col sm="6">
                         <Label>Real estate agent fee</Label>
                     </Col>
 
-                    <Col sm="3">
-                        <Input
-                            placeholder="Real estate agent fee"
-                            value={loanStore.estateAgentFee}
-                            onChange={this.handleEstateAgentFeeChange}
-                        />
+                    <Col sm="4">
+                        <InputGroup>
+                            <InputGroupAddon addonType="prepend">
+                                <InputGroupText>
+                                    <FontAwesomeIcon
+                                        icon="euro-sign"
+                                        size="sm"
+                                    />
+                                </InputGroupText>
+                            </InputGroupAddon>
+                            <Input
+                                placeholder="Real estate agent fee"
+                                value={loanStore.estateAgentFee}
+                                onChange={this.handleEstateAgentFeeChange}
+                            />
+                        </InputGroup>
                     </Col>
                 </Row>
             </Container>
@@ -86,7 +109,7 @@ class Taxes extends Component {
     handleEstateAgentFeeChange = (ev) => {
         const { loanStore } = this.props;
 
-        loanStore.evaluationFee = ev.target.value;
+        loanStore.estateAgentFee = ev.target.value;
 
         updateLoanDetails();
     };

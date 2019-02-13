@@ -8,7 +8,7 @@ import {
 } from 'reactstrap';
 import { inject, observer } from 'mobx-react';
 import { updateLoanDetails } from 'src/store/LoanStore.js';
-import { formatAmount } from 'src/util/amountUtil.js';
+import { formatAmount, roundAmount } from 'src/util/amountUtil.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class Fees extends Component {
@@ -30,16 +30,26 @@ class Fees extends Component {
                 </Row>
 
                 <Row className="mb-2">
-                    <Col sm="3">
+                    <Col sm="4">
                         <Label>Account costs</Label>
                     </Col>
-                    <Col sm="3">
-                        <Input
-                            id="monthly-fee"
-                            placeholder="Monthly fee"
-                            value={loanStore.monthlyFee}
-                            onChange={this.handleMonthlyFeeChange}
-                        />
+                    <Col sm="4">
+                        <InputGroup>
+                            <InputGroupAddon addonType="prepend">
+                                <InputGroupText>
+                                    <FontAwesomeIcon
+                                        icon="euro-sign"
+                                        size="sm"
+                                    />
+                                </InputGroupText>
+                            </InputGroupAddon>
+                            <Input
+                                id="monthly-fee"
+                                placeholder="Monthly fee"
+                                value={loanStore.monthlyFee}
+                                onChange={this.handleMonthlyFeeChange}
+                            />
+                        </InputGroup>
                     </Col>
                 </Row>
 
@@ -50,28 +60,49 @@ class Fees extends Component {
                 </Row>
 
                 <Row className="mb-2">
-                    <Col sm="3">
+                    <Col sm="4">
                         <Label>Contract Fee</Label>
                     </Col>
-                    <Col sm="3">
-                        <Input
-                            placeholder="Contract Fee"
-                            value={loanStore.contractFee}
-                            onChange={this.handleContractFeeChange}
-                        />
-
+                    <Col sm="4">
+                        <InputGroup>
+                            <InputGroupAddon addonType="prepend">
+                                <InputGroupText>
+                                    <FontAwesomeIcon
+                                        icon="euro-sign"
+                                        size="sm"
+                                    />
+                                </InputGroupText>
+                            </InputGroupAddon>
+                            <Input
+                                placeholder="Contract Fee"
+                                value={loanStore.contractFee}
+                                onChange={this.handleContractFeeChange}
+                            />
+                        </InputGroup>
                     </Col>
+                </Row>
 
-                    <Col sm="3">
+                <Row className="mb-2">
+                    <Col sm="4">
                         <Label>Property evaluation fee</Label>
                     </Col>
 
-                    <Col sm="3">
-                        <Input
-                            placeholder="Evaluation fee"
-                            value={loanStore.evaluationFee}
-                            onChange={this.handleEvaluationFeeChange}
-                        />
+                    <Col sm="4">
+                        <InputGroup>
+                            <InputGroupAddon addonType="prepend">
+                                <InputGroupText>
+                                    <FontAwesomeIcon
+                                        icon="euro-sign"
+                                        size="sm"
+                                    />
+                                </InputGroupText>
+                            </InputGroupAddon>
+                            <Input
+                                placeholder="Evaluation fee"
+                                value={roundAmount(loanStore.evaluationFee)}
+                                onChange={this.handleEvaluationFeeChange}
+                            />
+                        </InputGroup>
                     </Col>
                 </Row>
 
@@ -80,7 +111,7 @@ class Fees extends Component {
                         <Label>Mortgage registration tax <br/>(1.2% of the loan)</Label>
                     </Col>
 
-                    <Col sm="4">
+                    <Col sm="3">
                         <InputGroup>
                             <InputGroupAddon addonType="prepend">
                                 <InputGroupText>
@@ -98,7 +129,7 @@ class Fees extends Component {
                         </InputGroup>
                     </Col>
 
-                    <Col sm="4">
+                    <Col sm={{size: 3, offset: 1}}>
                         {formatAmount(loanStore.mortgageRegistrationTax)}
                     </Col>
                 </Row>
