@@ -20,9 +20,10 @@
   },
   "scripts": {
     "start": "NODE_PATH=./ react-scripts start",
-    "build": "react-scripts build",
+    "build": "NODE_PATH=./ react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "surge --domain loan-calculator.surge.sh --project ./build"
   },
   "eslintConfig": {
     "extends": "react-app"
