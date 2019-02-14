@@ -14,7 +14,7 @@ export class App extends Component {
     render() {
         return (
             <Provider loanStore={loanStore}>
-                <div>
+                <div className="mt-4">
                     <LoanDetails />
 
                     <Container fluid>

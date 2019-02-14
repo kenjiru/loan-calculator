@@ -13,18 +13,20 @@ export const loanStore = observable({
     propertyTransferTax: 0,
     ownershipRegistrationTax: 0,
     mortgageRegistrationTax: 0,
-    mortgageRegistrationPercentage: 100,
+    mortgageRegistrationReferencePercentage: 100,
 
     monthlyFee: 0,
     contractFee: 0,
     contractFeePercentage: 1,
     evaluationFee: 0,
     evaluationFeePercentage: 0.1,
+    otherBankFees: 0,
 
     notaryFee: 0,
     estateAgentFee: 0,
 
-    nominalAmount: 0,
+    minimumAmount: 0,
+    financedAmount: 0,
     availableAmount: 0,
     monthlyData: [],
     totalInterest: 0,
@@ -32,31 +34,48 @@ export const loanStore = observable({
     totalLoanCost: 0,
 });
 
+const MORTGAGE_REGISTRATION_PERCENTAGE = 0.012;
+
 export function updateLoanDetails() {
     const purchasePrice = parseFloat(loanStore.purchasePrice);
     const ownCapital = parseFloat(loanStore.ownCapital);
 
     loanStore.propertyTransferTax = purchasePrice * 0.035;
     loanStore.ownershipRegistrationTax = purchasePrice * 0.011;
-    loanStore.mortgageRegistrationTax = (purchasePrice - ownCapital) * 1.1045 *
-        parseFloat(loanStore.mortgageRegistrationPercentage) / 100 *
-        0.012;
 
-    loanStore.contractFee = (purchasePrice - ownCapital) * 1.1045 * loanStore.contractFeePercentage / 100;
-    loanStore.evaluationFee = (purchasePrice - ownCapital) * 1.1045 * loanStore.evaluationFeePercentage / 100;
-
-    loanStore.availableAmount = purchasePrice - ownCapital +
+    loanStore.minimumAmount = purchasePrice - ownCapital +
         loanStore.propertyTransferTax +
         loanStore.ownershipRegistrationTax +
-        parseFloat(loanStore.notaryFee);
+        parseFloat(loanStore.notaryFee) +
+        parseFloat(loanStore.estateAgentFee);
 
-    loanStore.nominalAmount = loanStore.availableAmount +
-        loanStore.mortgageRegistrationTax +
-        loanStore.contractFee +
-        loanStore.evaluationFee;
+    loanStore.mortgageRegistrationTax = loanStore.financedAmount *
+        MORTGAGE_REGISTRATION_PERCENTAGE * loanStore.mortgageRegistrationReferencePercentage / 100;
+    loanStore.contractFee = loanStore.financedAmount * loanStore.contractFeePercentage / 100;
+    loanStore.evaluationFee = loanStore.financedAmount * loanStore.evaluationFeePercentage / 100;
+
+    loanStore.availableAmount = loanStore.financedAmount -
+        loanStore.mortgageRegistrationTax -
+        loanStore.contractFee -
+        loanStore.evaluationFee -
+        loanStore.otherBankFees;
+
+    // const feesPercentage = loanStore.contractFeePercentage +
+    //     loanStore.evaluationFeePercentage +
+    //     MORTGAGE_REGISTRATION_PERCENTAGE * loanStore.mortgageRegistrationReferencePercentage;
+    //
+    // loanStore.mortgageRegistrationTax = availableAmount /
+    //     (100 - feesPercentage) *
+    //     MORTGAGE_REGISTRATION_PERCENTAGE * loanStore.mortgageRegistrationReferencePercentage; // 1.2
+    // loanStore.contractFee = availableAmount /
+    //     (100 - feesPercentage) *
+    //     loanStore.contractFeePercentage; // 1
+    // loanStore.evaluationFee = availableAmount /
+    //     (100 - feesPercentage) *
+    //     loanStore.evaluationFeePercentage; // 0.1
 
     const result = getLoanData(
-        parseFloat(loanStore.nominalAmount),
+        parseFloat(loanStore.financedAmount),
         parseFloat(loanStore.interest) / 100,
         parseInt(loanStore.duration) * 12,
         parseInt(loanStore.fixDuration) * 12,
@@ -71,5 +90,5 @@ export function updateLoanDetails() {
         parseFloat(loanStore.monthlyFee) * parseInt(loanStore.duration) * 12 +
         parseFloat(loanStore.contractFee) +
         parseFloat(loanStore.evaluationFee) +
-        loanStore.mortgageRegistrationTax;
+        parseFloat(loanStore.mortgageRegistrationTax);
 }

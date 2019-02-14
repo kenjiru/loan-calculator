@@ -8,7 +8,7 @@ import {
 } from 'reactstrap';
 import { inject, observer } from 'mobx-react';
 import { updateLoanDetails } from 'src/store/LoanStore.js';
-import { formatAmount, roundAmount } from 'src/util/amountUtil.js';
+import { roundAmount } from 'src/util/amountUtil.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class Fees extends Component {
@@ -45,7 +45,6 @@ class Fees extends Component {
                             </InputGroupAddon>
                             <Input
                                 id="monthly-fee"
-                                placeholder="Monthly fee"
                                 value={loanStore.monthlyFee}
                                 onChange={this.handleMonthlyFeeChange}
                             />
@@ -61,7 +60,7 @@ class Fees extends Component {
 
                 <Row className="mb-2">
                     <Col sm="4">
-                        <Label>Contract Fee</Label>
+                        <Label>Contract Fee <br/>(% of amount financed)</Label>
                     </Col>
 
                     <Col sm="3">
@@ -75,7 +74,6 @@ class Fees extends Component {
                                 </InputGroupText>
                             </InputGroupAddon>
                             <Input
-                                placeholder="Interest rate"
                                 value={loanStore.contractFeePercentage}
                                 onChange={this.handleContractFeePercentageChange}
                             />
@@ -93,7 +91,7 @@ class Fees extends Component {
                                 </InputGroupText>
                             </InputGroupAddon>
                             <Input
-                                placeholder="Contract Fee"
+                                disabled
                                 value={loanStore.contractFee}
                                 onChange={this.handleContractFeeChange}
                             />
@@ -103,7 +101,7 @@ class Fees extends Component {
 
                 <Row className="mb-2">
                     <Col sm="4">
-                        <Label>Property evaluation fee</Label>
+                        <Label>Property evaluation fee <br/>(% of amount financed)</Label>
                     </Col>
 
                     <Col sm="3">
@@ -117,7 +115,6 @@ class Fees extends Component {
                                 </InputGroupText>
                             </InputGroupAddon>
                             <Input
-                                placeholder="Interest rate"
                                 value={loanStore.evaluationFeePercentage}
                                 onChange={this.handleEvaluationFeePercentageChange}
                             />
@@ -135,7 +132,7 @@ class Fees extends Component {
                                 </InputGroupText>
                             </InputGroupAddon>
                             <Input
-                                placeholder="Evaluation fee"
+                                disabled
                                 value={roundAmount(loanStore.evaluationFee)}
                                 onChange={this.handleEvaluationFeeChange}
                             />
@@ -145,7 +142,7 @@ class Fees extends Component {
 
                 <Row className="mb-2">
                     <Col sm="4">
-                        <Label>Mortgage registration tax <br/>(1.2% of the loan)</Label>
+                        <Label>Mortgage registration tax <br/>(1.2% of amount financed)</Label>
                     </Col>
 
                     <Col sm="3">
@@ -159,15 +156,51 @@ class Fees extends Component {
                                 </InputGroupText>
                             </InputGroupAddon>
                             <Input
-                                placeholder="Interest rate"
-                                value={loanStore.mortgageRegistrationPercentage}
-                                onChange={this.handleMortgageRegistrationPercentageChange}
+                                value={loanStore.mortgageRegistrationReferencePercentage}
+                                onChange={this.handleMortgageRegistrationReferencePercentageChange}
                             />
                         </InputGroup>
                     </Col>
 
                     <Col sm={{size: 3, offset: 1}}>
-                        {formatAmount(loanStore.mortgageRegistrationTax)}
+                        <InputGroup>
+                            <InputGroupAddon addonType="prepend">
+                                <InputGroupText>
+                                    <FontAwesomeIcon
+                                        icon="euro-sign"
+                                        size="sm"
+                                    />
+                                </InputGroupText>
+                            </InputGroupAddon>
+                            <Input
+                                disabled
+                                value={loanStore.mortgageRegistrationTax}
+                                onChange={this.handleMortgageRegistrationTaxChange}
+                            />
+                        </InputGroup>
+                    </Col>
+                </Row>
+
+                <Row className="mb-2">
+                    <Col sm="4">
+                        <Label>Other bank fees</Label>
+                    </Col>
+                    <Col sm="4">
+                        <InputGroup>
+                            <InputGroupAddon addonType="prepend">
+                                <InputGroupText>
+                                    <FontAwesomeIcon
+                                        icon="euro-sign"
+                                        size="sm"
+                                    />
+                                </InputGroupText>
+                            </InputGroupAddon>
+                            <Input
+                                id="monthly-fee"
+                                value={loanStore.otherBankFees}
+                                onChange={this.handleOtherBankFeesChange}
+                            />
+                        </InputGroup>
                     </Col>
                 </Row>
             </Container>
@@ -214,10 +247,26 @@ class Fees extends Component {
         updateLoanDetails();
     };
 
-    handleMortgageRegistrationPercentageChange = (ev) => {
+    handleMortgageRegistrationReferencePercentageChange = (ev) => {
         const { loanStore } = this.props;
 
-        loanStore.mortgageRegistrationPercentage = ev.target.value;
+        loanStore.mortgageRegistrationReferencePercentage = ev.target.value;
+
+        updateLoanDetails();
+    };
+
+    handleMortgageRegistrationTaxChange = (ev) => {
+        const { loanStore } = this.props;
+
+        loanStore.mortgageRegistrationTax = ev.target.value;
+
+        updateLoanDetails();
+    };
+
+    handleOtherBankFeesChange = (ev) => {
+        const { loanStore } = this.props;
+
+        loanStore.otherBankFees = ev.target.value;
 
         updateLoanDetails();
     };

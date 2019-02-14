@@ -63,7 +63,6 @@ class Taxes extends Component {
                                 </InputGroupText>
                             </InputGroupAddon>
                             <Input
-                                placeholder="Notarial fee"
                                 value={loanStore.notaryFee}
                                 onChange={this.handleNotaryFeeChange}
                             />
@@ -87,11 +86,20 @@ class Taxes extends Component {
                                 </InputGroupText>
                             </InputGroupAddon>
                             <Input
-                                placeholder="Real estate agent fee"
                                 value={loanStore.estateAgentFee}
                                 onChange={this.handleEstateAgentFeeChange}
                             />
                         </InputGroup>
+                    </Col>
+                </Row>
+
+                <Row className="mb-2">
+                    <Col md="6">
+                        <Label>Minimum amount needed</Label>
+                    </Col>
+
+                    <Col md="3">
+                        <b>{formatAmount(loanStore.minimumAmount)}</b>
                     </Col>
                 </Row>
             </Container>
