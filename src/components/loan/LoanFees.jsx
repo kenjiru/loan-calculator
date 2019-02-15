@@ -11,7 +11,7 @@ import { updateLoanDetails } from 'src/store/LoanStore.js';
 import { roundAmount } from 'src/util/amountUtil.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-class Fees extends Component {
+class LoanFees extends Component {
     render() {
         const { loanStore } = this.props;
 
@@ -19,7 +19,7 @@ class Fees extends Component {
             <Container fluid>
                 <Row>
                     <Col>
-                        <h4 className="mb-2">Loan fees</h4>
+                        <h4 className="mb-2">Loan Fees</h4>
                     </Col>
                 </Row>
 
@@ -30,10 +30,10 @@ class Fees extends Component {
                 </Row>
 
                 <Row className="mb-2">
-                    <Col sm="4">
+                    <Col md="4">
                         <Label>Account costs</Label>
                     </Col>
-                    <Col sm="4">
+                    <Col md="4">
                         <InputGroup>
                             <InputGroupAddon addonType="prepend">
                                 <InputGroupText>
@@ -59,11 +59,11 @@ class Fees extends Component {
                 </Row>
 
                 <Row className="mb-2">
-                    <Col sm="4">
+                    <Col md="4">
                         <Label>Contract Fee <br/>(% of amount financed)</Label>
                     </Col>
 
-                    <Col sm="3">
+                    <Col md="3">
                         <InputGroup>
                             <InputGroupAddon addonType="prepend">
                                 <InputGroupText>
@@ -80,7 +80,7 @@ class Fees extends Component {
                         </InputGroup>
                     </Col>
 
-                    <Col sm={{size: 4, offset: 1}}>
+                    <Col md={{size: 4, offset: 1}}>
                         <InputGroup>
                             <InputGroupAddon addonType="prepend">
                                 <InputGroupText>
@@ -100,11 +100,11 @@ class Fees extends Component {
                 </Row>
 
                 <Row className="mb-2">
-                    <Col sm="4">
+                    <Col md="4">
                         <Label>Property evaluation fee <br/>(% of amount financed)</Label>
                     </Col>
 
-                    <Col sm="3">
+                    <Col md="3">
                         <InputGroup>
                             <InputGroupAddon addonType="prepend">
                                 <InputGroupText>
@@ -121,7 +121,7 @@ class Fees extends Component {
                         </InputGroup>
                     </Col>
 
-                    <Col sm={{size: 4, offset: 1}}>
+                    <Col md={{size: 4, offset: 1}}>
                         <InputGroup>
                             <InputGroupAddon addonType="prepend">
                                 <InputGroupText>
@@ -141,11 +141,11 @@ class Fees extends Component {
                 </Row>
 
                 <Row className="mb-2">
-                    <Col sm="4">
+                    <Col md="4">
                         <Label>Mortgage registration tax <br/>(1.2% of amount financed)</Label>
                     </Col>
 
-                    <Col sm="3">
+                    <Col md="3">
                         <InputGroup>
                             <InputGroupAddon addonType="prepend">
                                 <InputGroupText>
@@ -162,7 +162,7 @@ class Fees extends Component {
                         </InputGroup>
                     </Col>
 
-                    <Col sm={{size: 3, offset: 1}}>
+                    <Col md={{size: 4, offset: 1}}>
                         <InputGroup>
                             <InputGroupAddon addonType="prepend">
                                 <InputGroupText>
@@ -182,10 +182,10 @@ class Fees extends Component {
                 </Row>
 
                 <Row className="mb-2">
-                    <Col sm="4">
+                    <Col md="4">
                         <Label>Other bank fees</Label>
                     </Col>
-                    <Col sm="4">
+                    <Col md="4">
                         <InputGroup>
                             <InputGroupAddon addonType="prepend">
                                 <InputGroupText>
@@ -272,4 +272,4 @@ class Fees extends Component {
     };
 }
 
-export const LoanFeesContainer = inject('loanStore')(observer(Fees));
+export const LoanFeesContainer = inject('loanStore')(observer(LoanFees));

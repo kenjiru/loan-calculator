@@ -1,33 +1,36 @@
 import React, { Component } from 'react';
 import {
     Col,
-    Container,
-    Input,
+    Container, Input,
     InputGroup,
     InputGroupAddon,
-    InputGroupText, Label, Row,
+    InputGroupText,
+    Label,
+    Row,
 } from 'reactstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { inject, observer } from 'mobx-react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { updateLoanDetails } from 'src/store/LoanStore.js';
+import { formatAmount } from 'src/util/amountUtil.js';
 
-class LoanInputData extends Component {
+export class LoanData extends Component {
     render() {
         const { loanStore } = this.props;
 
         return (
             <Container fluid>
-                <Row className="mb-2">
+                <Row>
                     <Col>
-                        <h4 className="mb-2">Loan input data</h4>
+                        <h4 className="mb-2">Loan Data</h4>
                     </Col>
                 </Row>
 
                 <Row className="mb-2">
-                    <Col sm="3">
-                        <Label>Amount</Label>
+                    <Col md="4">
+                        <Label>Actual amount financed</Label>
                     </Col>
-                    <Col sm="9">
+
+                    <Col md="4">
                         <InputGroup>
                             <InputGroupAddon addonType="prepend">
                                 <InputGroupText>
@@ -38,42 +41,28 @@ class LoanInputData extends Component {
                                 </InputGroupText>
                             </InputGroupAddon>
                             <Input
-                                placeholder="Loan amount"
-                                value={loanStore.purchasePrice}
-                                onChange={this.handlePurchasePriceChange}
+                                value={loanStore.financedAmount}
+                                onChange={this.handleFinancedAmountChange}
                             />
                         </InputGroup>
                     </Col>
                 </Row>
 
                 <Row className="mb-2">
-                    <Col sm="3">
-                        <Label>Own capital</Label>
+                    <Col md="4">
+                        <Label>Actual available amount</Label>
                     </Col>
-                    <Col sm="9">
-                        <InputGroup>
-                            <InputGroupAddon addonType="prepend">
-                                <InputGroupText>
-                                    <FontAwesomeIcon
-                                        icon="euro-sign"
-                                        size="sm"
-                                    />
-                                </InputGroupText>
-                            </InputGroupAddon>
-                            <Input
-                                placeholder="Own capital"
-                                value={loanStore.ownCapital}
-                                onChange={this.handleOwnCapitalChange}
-                            />
-                        </InputGroup>
+
+                    <Col md="4">
+                        {formatAmount(loanStore.availableAmount)}
                     </Col>
                 </Row>
 
                 <Row className="mb-2">
-                    <Col sm="3">
-                        <Label>Total duration</Label>
+                    <Col md="4">
+                        <Label>Total duration <br />(years)</Label>
                     </Col>
-                    <Col sm="3">
+                    <Col md="3">
                         <InputGroup>
                             <InputGroupAddon addonType="prepend">
                                 <InputGroupText>
@@ -84,17 +73,18 @@ class LoanInputData extends Component {
                                 </InputGroupText>
                             </InputGroupAddon>
                             <Input
-                                placeholder="Duration in years"
                                 value={loanStore.duration}
                                 onChange={this.handleDurationChange}
                             />
                         </InputGroup>
                     </Col>
+                </Row>
 
-                    <Col sm="3">
-                        <Label>Fixed duration</Label>
+                <Row className="mb-2">
+                    <Col md="4">
+                        <Label>Fixed duration <br />(years)</Label>
                     </Col>
-                    <Col sm="3">
+                    <Col md="3">
                         <InputGroup>
                             <InputGroupAddon addonType="prepend">
                                 <InputGroupText>
@@ -105,7 +95,6 @@ class LoanInputData extends Component {
                                 </InputGroupText>
                             </InputGroupAddon>
                             <Input
-                                placeholder="Fix duration"
                                 value={loanStore.fixDuration}
                                 onChange={this.handleFixDurationChange}
                             />
@@ -114,11 +103,11 @@ class LoanInputData extends Component {
                 </Row>
 
                 <Row className="mb-2">
-                    <Col sm="3">
+                    <Col md="4">
                         <Label>Fixed interest rate</Label>
                     </Col>
 
-                    <Col sm="3">
+                    <Col md="3">
                         <InputGroup>
                             <InputGroupAddon addonType="prepend">
                                 <InputGroupText>
@@ -135,12 +124,14 @@ class LoanInputData extends Component {
                             />
                         </InputGroup>
                     </Col>
+                </Row>
 
-                    <Col sm="3">
+                <Row className="mb-2">
+                    <Col md="4">
                         <Label>Variable interest rate</Label>
                     </Col>
 
-                    <Col sm="3">
+                    <Col md="3">
                         <InputGroup>
                             <InputGroupAddon addonType="prepend">
                                 <InputGroupText>
@@ -151,7 +142,6 @@ class LoanInputData extends Component {
                                 </InputGroupText>
                             </InputGroupAddon>
                             <Input
-                                placeholder="variableInterest"
                                 value={loanStore.variableInterest}
                                 onChange={this.handleVariableInterestChange}
                             />
@@ -162,18 +152,10 @@ class LoanInputData extends Component {
         );
     }
 
-    handlePurchasePriceChange = (ev) => {
+    handleFinancedAmountChange = (ev) => {
         const { loanStore } = this.props;
 
-        loanStore.purchasePrice = ev.target.value;
-
-        updateLoanDetails();
-    };
-
-    handleOwnCapitalChange = (ev) => {
-        const { loanStore } = this.props;
-
-        loanStore.ownCapital = ev.target.value;
+        loanStore.financedAmount = ev.target.value;
 
         updateLoanDetails();
     };
@@ -209,6 +191,6 @@ class LoanInputData extends Component {
 
         updateLoanDetails();
     };
-};
+}
 
-export const LoadInputDataContainer = inject('loanStore')(observer(LoanInputData));
+export const LoanDataContainer = inject('loanStore')(observer(LoanData));

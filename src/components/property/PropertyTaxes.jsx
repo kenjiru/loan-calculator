@@ -11,7 +11,7 @@ import { updateLoanDetails } from 'src/store/LoanStore.js';
 import { formatAmount } from 'src/util/amountUtil.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-class Taxes extends Component {
+class PropertyTaxes extends Component {
     render() {
         const { loanStore } = this.props;
 
@@ -19,24 +19,24 @@ class Taxes extends Component {
             <Container fluid>
                 <Row>
                     <Col>
-                        <h4 className="mb-2">Taxes</h4>
+                        <h4 className="mb-2">Property Taxes</h4>
                     </Col>
                 </Row>
 
                 <Row className="mb-2">
-                    <Col sm="6">
+                    <Col md="4">
                         <Label>Property transfer tax <br/>(3.5% of purchase price)</Label>
                     </Col>
-                    <Col sm="6">
+                    <Col md="4">
                         {formatAmount(loanStore.propertyTransferTax)}
                     </Col>
                 </Row>
 
                 <Row className="mb-2">
-                    <Col sm="6">
+                    <Col md="4">
                         <Label>Registration of ownership title <br/>(1.1% of purchase price)</Label>
                     </Col>
-                    <Col sm="6">
+                    <Col md="4">
                         {formatAmount(loanStore.ownershipRegistrationTax)}
                     </Col>
                 </Row>
@@ -48,11 +48,11 @@ class Taxes extends Component {
                 </Row>
 
                 <Row className="mb-2">
-                    <Col sm="6">
+                    <Col md="4">
                         <Label>Notary fee</Label>
                     </Col>
 
-                    <Col sm="4">
+                    <Col md="4">
                         <InputGroup>
                             <InputGroupAddon addonType="prepend">
                                 <InputGroupText>
@@ -71,11 +71,11 @@ class Taxes extends Component {
                 </Row>
 
                 <Row className="mb-2">
-                    <Col sm="6">
+                    <Col md="4">
                         <Label>Real estate agent fee</Label>
                     </Col>
 
-                    <Col sm="4">
+                    <Col md="4">
                         <InputGroup>
                             <InputGroupAddon addonType="prepend">
                                 <InputGroupText>
@@ -94,11 +94,11 @@ class Taxes extends Component {
                 </Row>
 
                 <Row className="mb-2">
-                    <Col md="6">
-                        <Label>Minimum amount needed</Label>
+                    <Col md="4">
+                        <Label>Minimum available amount needed</Label>
                     </Col>
 
-                    <Col md="3">
+                    <Col md="4">
                         <b>{formatAmount(loanStore.minimumAmount)}</b>
                     </Col>
                 </Row>
@@ -123,4 +123,4 @@ class Taxes extends Component {
     };
 }
 
-export const TaxesContainer = inject('loanStore')(observer(Taxes));
+export const PropertyTaxesContainer = inject('loanStore')(observer(PropertyTaxes));

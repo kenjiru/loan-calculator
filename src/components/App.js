@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Provider } from 'mobx-react';
 import { Container } from 'reactstrap';
-import { TableHeader } from 'src/components/TableHeader.jsx';
-import { TableBodyContainer } from 'src/components/TableBody.jsx';
-import { LoanDetails } from 'src/components/LoanDetails.jsx';
+import { TableHeader } from 'src/components/rates/TableHeader.jsx';
+import { TableBodyContainer } from 'src/components/rates/TableBody.jsx';
+import { TopPart } from 'src/components/TopPart.jsx';
 import { loanStore, updateLoanDetails } from 'src/store/LoanStore.js';
 
 export class App extends Component {
@@ -15,7 +15,7 @@ export class App extends Component {
         return (
             <Provider loanStore={loanStore}>
                 <div className="mt-4">
-                    <LoanDetails />
+                    <TopPart />
 
                     <Container fluid>
                         <table className="table table-striped loan-table">

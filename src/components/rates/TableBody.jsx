@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React from 'react';
-import { TableRow } from 'src/components/TableRow.jsx';
+import { TableRow } from 'src/components/rates/TableRow.jsx';
 import { inject, observer } from 'mobx-react';
 
 function renderMonthlyData(monthlyData) {
