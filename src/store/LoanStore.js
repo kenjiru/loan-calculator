@@ -1,5 +1,8 @@
 import { observable } from 'mobx';
+import store from 'store';
 import { getLoanData } from 'src/util/loanUtil.js';
+
+const LOCAL_STORAGE_KEY = 'loan-calculator';
 
 export const loanStore = observable({
     purchasePrice: 0,
@@ -60,20 +63,6 @@ export function updateLoanDetails() {
         loanStore.evaluationFee -
         loanStore.otherBankFees;
 
-    // const feesPercentage = loanStore.contractFeePercentage +
-    //     loanStore.evaluationFeePercentage +
-    //     MORTGAGE_REGISTRATION_PERCENTAGE * loanStore.mortgageRegistrationReferencePercentage;
-    //
-    // loanStore.mortgageRegistrationTax = availableAmount /
-    //     (100 - feesPercentage) *
-    //     MORTGAGE_REGISTRATION_PERCENTAGE * loanStore.mortgageRegistrationReferencePercentage; // 1.2
-    // loanStore.contractFee = availableAmount /
-    //     (100 - feesPercentage) *
-    //     loanStore.contractFeePercentage; // 1
-    // loanStore.evaluationFee = availableAmount /
-    //     (100 - feesPercentage) *
-    //     loanStore.evaluationFeePercentage; // 0.1
-
     const result = getLoanData(
         parseFloat(loanStore.financedAmount),
         parseFloat(loanStore.interest) / 100,
@@ -91,4 +80,18 @@ export function updateLoanDetails() {
         parseFloat(loanStore.contractFee) +
         parseFloat(loanStore.evaluationFee) +
         parseFloat(loanStore.mortgageRegistrationTax);
+
+    persistToLocalStore()
+}
+
+function persistToLocalStore() {
+    store.set(LOCAL_STORAGE_KEY, loanStore);
+}
+
+export function restoreFromLocalStore() {
+    const persistedStore = store.get(LOCAL_STORAGE_KEY);
+
+    Object.keys(persistedStore).forEach(key => {
+        loanStore[key] = persistedStore[key];
+    });
 }

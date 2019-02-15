@@ -4,10 +4,11 @@ import { Container } from 'reactstrap';
 import { TableHeader } from 'src/components/rates/TableHeader.jsx';
 import { TableBodyContainer } from 'src/components/rates/TableBody.jsx';
 import { TopPart } from 'src/components/TopPart.jsx';
-import { loanStore, updateLoanDetails } from 'src/store/LoanStore.js';
+import { loanStore, restoreFromLocalStore, updateLoanDetails } from 'src/store/LoanStore.js';
 
 export class App extends Component {
     componentDidMount() {
+        restoreFromLocalStore();
         updateLoanDetails();
     }
 
