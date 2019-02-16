@@ -1,0 +1,7 @@
+.year-row {
+    cursor: pointer;
+}
+
+.year-row .row-index {
+    font-weight: bold;
+}

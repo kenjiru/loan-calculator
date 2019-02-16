@@ -1,6 +1,6 @@
 import { observable } from 'mobx';
 import store from 'store';
-import { getLoanData } from 'src/util/loanUtil.js';
+import { getLoanData, getYearlyData } from 'src/util/loanUtil.js';
 
 const LOCAL_STORAGE_KEY = 'loan-calculator';
 
@@ -32,6 +32,7 @@ export const loanStore = observable({
     financedAmount: 0,
     availableAmount: 0,
     monthlyData: [],
+    yearlyData: [],
     totalInterest: 0,
     fixPeriodInterest: 0,
     totalLoanCost: 0,
@@ -72,6 +73,7 @@ export function updateLoanDetails() {
     );
 
     loanStore.monthlyData = result.monthlyData;
+    loanStore.yearlyData = getYearlyData(loanStore.monthlyData);
     loanStore.totalInterest = result.totalInterest;
     loanStore.fixPeriodInterest = result.fixPeriodInterest;
 

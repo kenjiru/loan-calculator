@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Provider } from 'mobx-react';
 import { Container } from 'reactstrap';
-import { TableHeader } from 'src/components/rates/TableHeader.jsx';
-import { TableBodyContainer } from 'src/components/rates/TableBody.jsx';
 import { TopPart } from 'src/components/TopPart.jsx';
+import { AmortizationSchedule } from 'src/components/amortization-schedule/AmortizationSchedule.jsx';
 import { loanStore, restoreFromLocalStore, updateLoanDetails } from 'src/store/LoanStore.js';
+import { uiStore } from 'src/store/UiStore.js';
 
 export class App extends Component {
     componentDidMount() {
@@ -14,15 +14,12 @@ export class App extends Component {
 
     render() {
         return (
-            <Provider loanStore={loanStore}>
+            <Provider loanStore={loanStore} uiStore={uiStore}>
                 <div className="mt-4">
                     <TopPart />
 
                     <Container fluid>
-                        <table className="table table-striped loan-table">
-                            <TableHeader />
-                            <TableBodyContainer />
-                        </table>
+                        <AmortizationSchedule />
                     </Container>
                 </div>
             </Provider>

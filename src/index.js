@@ -6,7 +6,7 @@ import { faEuroSign, faPercent, faClock } from '@fortawesome/free-solid-svg-icon
 
 import 'bootstrap/dist/css/bootstrap.css';
 
-import { App } from './components/App';
+import { App } from './components/App.jsx';
 
 library.add(faEuroSign, faPercent, faClock);
 

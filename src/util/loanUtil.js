@@ -8,7 +8,7 @@ export function getLoanData(principal, interest, period, fixPeriod, variableInte
     const monthlyData = _
         .range(period)
         .map(index => {
-            if (index === fixPeriod + 1) {
+            if (index === fixPeriod) {
                 interest = variableInterest;
                 monthlyRate = calculateMonthlyRate(principal, interest, period - index);
             }
@@ -35,7 +35,7 @@ export function getLoanData(principal, interest, period, fixPeriod, variableInte
             totalInterest += currentMonthInterest;
 
             return {
-                index: index + 1,
+                index: `Month ${index + 1}`,
                 repayment: currentMonthInterest + currentMonthPrincipal,
                 interest: currentMonthInterest,
                 principal: currentMonthPrincipal,
@@ -48,6 +48,26 @@ export function getLoanData(principal, interest, period, fixPeriod, variableInte
         totalInterest,
         fixPeriodInterest,
     };
+}
+
+export function getYearlyData(monthlyData) {
+    return _.reduce(monthlyData, (yearlyData, month, index) => {
+        const yearIndex = Math.floor(index / 12);
+
+        if (yearlyData[yearIndex] === undefined) {
+            yearlyData[yearIndex] = {
+                ...month,
+                index: `Year ${yearIndex + 1}`,
+            };
+        } else {
+            yearlyData[yearIndex].repayment += month.repayment;
+            yearlyData[yearIndex].interest += month.interest;
+            yearlyData[yearIndex].principal += month.principal;
+            yearlyData[yearIndex].newBalance = month.newBalance;
+        }
+
+        return yearlyData;
+    }, []);
 }
 
 export function calculateMonthlyRate(principal, interest, period) {
