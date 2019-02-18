@@ -1,8 +1,23 @@
 import { observable } from 'mobx';
 
+export const SECTION = {
+    PROPERTY: '1',
+    LOAN_DATA: '2',
+    LOAN_SUMMARY: '3',
+};
+
 export const uiStore = observable({
     extendedYears: [],
+    selectedSection: SECTION.PROPERTY,
 });
+
+export function toggleSection(selectedSection) {
+    if (uiStore.selectedSection !== selectedSection) {
+        uiStore.selectedSection = selectedSection;
+    } else {
+        uiStore.selectedSection = null;
+    }
+}
 
 export function toggleYear(index) {
     if (isYearSelected(index) === false) {
