@@ -4,6 +4,7 @@ export const SECTION = {
     PROPERTY: '1',
     LOAN_DATA: '2',
     LOAN_SUMMARY: '3',
+    EARLY_REPAYMENT: '4',
 };
 
 export const uiStore = observable({

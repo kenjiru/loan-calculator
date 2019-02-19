@@ -1,6 +1,7 @@
 import _ from 'lodash';
+import { PAYMENT_TYPE } from 'src/store/LoanStore.js';
 
-export function getLoanData(principal, interest, period, fixPeriod, variableInterest) {
+export function getLoanData(principal, interest, period, fixPeriod, variableInterest, repayment = {}) {
     let totalInterest = 0;
     let fixPeriodInterest = 0;
     let monthlyRate = calculateMonthlyRate(principal, interest, period);
@@ -13,15 +14,30 @@ export function getLoanData(principal, interest, period, fixPeriod, variableInte
                 monthlyRate = calculateMonthlyRate(principal, interest, period - index);
             }
 
-            // if (index === 12 * 15 + 2) {
-            //     principal -= 150000;
-            //     monthlyRate = calculateMonthlyRate(principal, interest, period - index - 1);
-            // }
+            if (repayment.paymentType === PAYMENT_TYPE.ONE_TIME &&
+                index + 1 === repayment.month
+            ) {
+                principal -= repayment.amount;
+                monthlyRate = calculateMonthlyRate(principal, interest, period - index - 1);
+            }
 
-            // if (index / 12 > 0 && index / 12 <= 15 && index % 12 === 0) {
-            //     principal -= 10000;
-            //     monthlyRate = calculateMonthlyRate(principal, interest, period - index);
-            // }
+            if (repayment.paymentType === PAYMENT_TYPE.MONTHLY &&
+                index > repayment.startMonth &&
+                index < repayment.startMonth + repayment.lengthMonths
+            ) {
+                principal -= repayment.amount;
+                monthlyRate = calculateMonthlyRate(principal, interest, period - index - 1);
+            }
+
+            if (repayment.paymentType === PAYMENT_TYPE.YEARLY &&
+                index % 12 === 0 &&
+                index / 12 > repayment.startYear &&
+                index / 12 < repayment.startYear + repayment.lengthYears
+            ) {
+                debugger;
+                principal -= repayment.amount;
+                monthlyRate = calculateMonthlyRate(principal, interest, period - index - 1);
+            }
 
             const currentMonthInterest = interest / 12 * principal;
             const currentMonthPrincipal = monthlyRate - currentMonthInterest;

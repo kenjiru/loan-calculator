@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import { Alert, Col, Collapse, Container, Row } from 'reactstrap';
 import { inject, observer } from 'mobx-react';
+import { formatAmount } from 'src/util/amountUtil.js';
+import { SECTION, toggleSection } from 'src/store/UiStore.js';
 import { PropertyDataContainer } from 'src/components/property/PropertyData.jsx';
 import { LoanSummaryContainer } from 'src/components/loan/LoanSummary.jsx';
 import { LoanFeesContainer } from 'src/components/loan/LoanFees.jsx';
 import { PropertyTaxesContainer } from 'src/components/property/PropertyTaxes.jsx';
 import { LoanDataContainer } from 'src/components/loan/LoanData.jsx';
+import { EarlyRepaymentContainer } from 'src/components/early-repayment/EarlyRepayment.jsx';
 import './TopPart.css';
-import { formatAmount } from 'src/util/amountUtil.js';
-import { SECTION, toggleSection } from 'src/store/UiStore.js';
 
 export class TopPart extends Component {
     state = {
@@ -68,6 +69,27 @@ export class TopPart extends Component {
                             </Col>
                             <Col md="6">
                                 <LoanFeesContainer />
+                            </Col>
+                        </Row>
+                    </Container>
+                </Collapse>
+
+                <Alert
+                    color="dark"
+                    className="mb-0"
+                    onClick={() => toggleSection(SECTION.EARLY_REPAYMENT)}
+                >
+                    <b>Early Repayment.</b> &nbsp;
+                </Alert>
+
+                <Collapse isOpen={selectedSection === SECTION.EARLY_REPAYMENT}>
+                    <Container
+                        className="pt-4"
+                        fluid
+                    >
+                        <Row className="mb-4">
+                            <Col md="6">
+                                <EarlyRepaymentContainer />
                             </Col>
                         </Row>
                     </Container>
