@@ -40,8 +40,8 @@ export const loanStore = observable({
     totalLoanCost: 0,
 
     oneTimePayment: {
-        month: null,
-        amount: null,
+        month: undefined,
+        amount: undefined,
 
         monthlyData: [],
         yearlyData: [],
@@ -50,9 +50,9 @@ export const loanStore = observable({
         totalLoanCost: 0,
     },
     monthlyPayment: {
-        startMonth: null,
-        lengthMonths: null,
-        amount: null,
+        startMonth: undefined,
+        lengthMonths: undefined,
+        amount: undefined,
 
         monthlyData: [],
         yearlyData: [],
@@ -61,9 +61,9 @@ export const loanStore = observable({
         totalLoanCost: 0,
     },
     yearlyPayment: {
-        startYear: null,
-        lengthYears: null,
-        amount: null,
+        startYear: undefined,
+        lengthYears: undefined,
+        amount: undefined,
 
         monthlyData: [],
         yearlyData: [],
@@ -119,6 +119,11 @@ function calculateNormalPaymentResult() {
     loanStore.yearlyData = getYearlyData(loanStore.monthlyData);
     loanStore.totalInterest = result.totalInterest;
     loanStore.fixPeriodInterest = result.fixPeriodInterest;
+    loanStore.totalLoanCost = result.totalInterest +
+        parseFloat(loanStore.monthlyFee) * parseInt(loanStore.duration) * 12 +
+        parseFloat(loanStore.contractFee) +
+        parseFloat(loanStore.evaluationFee) +
+        parseFloat(loanStore.mortgageRegistrationTax);
 }
 
 export const PAYMENT_TYPE = {
@@ -146,7 +151,7 @@ function calculateOneTimePaymentResult() {
     );
 
     loanStore.oneTimePayment.monthlyData = result.monthlyData;
-    loanStore.oneTimePayment.yearlyData = getYearlyData(loanStore.monthlyData);
+    loanStore.oneTimePayment.yearlyData = getYearlyData(loanStore.oneTimePayment.monthlyData);
     loanStore.oneTimePayment.totalInterest = result.totalInterest;
     loanStore.oneTimePayment.fixPeriodInterest = result.fixPeriodInterest;
     loanStore.oneTimePayment.totalLoanCost = result.totalInterest +
@@ -179,7 +184,7 @@ function calculateMonthlyPaymentResult() {
     );
 
     loanStore.monthlyPayment.monthlyData = result.monthlyData;
-    loanStore.monthlyPayment.yearlyData = getYearlyData(loanStore.monthlyData);
+    loanStore.monthlyPayment.yearlyData = getYearlyData(loanStore.monthlyPayment.monthlyData);
     loanStore.monthlyPayment.totalInterest = result.totalInterest;
     loanStore.monthlyPayment.fixPeriodInterest = result.fixPeriodInterest;
     loanStore.monthlyPayment.totalLoanCost = result.totalInterest +
@@ -193,7 +198,6 @@ function calculateMonthlyPaymentResult() {
 
 
 function calculateYearlyPaymentResult() {
-    debugger;
     if (_.isEmpty(loanStore.yearlyPayment.startYear) ||
         _.isEmpty(loanStore.yearlyPayment.lengthYears) ||
         _.isEmpty(loanStore.yearlyPayment.amount)
@@ -216,7 +220,7 @@ function calculateYearlyPaymentResult() {
     );
 
     loanStore.yearlyPayment.monthlyData = result.monthlyData;
-    loanStore.yearlyPayment.yearlyData = getYearlyData(loanStore.monthlyData);
+    loanStore.yearlyPayment.yearlyData = getYearlyData(loanStore.yearlyPayment.monthlyData);
     loanStore.yearlyPayment.totalInterest = result.totalInterest;
     loanStore.yearlyPayment.fixPeriodInterest = result.fixPeriodInterest;
     loanStore.yearlyPayment.totalLoanCost = result.totalInterest +
@@ -234,6 +238,10 @@ function persistToLocalStore() {
 
 export function restoreFromLocalStore() {
     const persistedStore = store.get(LOCAL_STORAGE_KEY);
+
+    if (_.isEmpty(persistedStore)) {
+        return;
+    }
 
     Object.keys(persistedStore).forEach(key => {
         loanStore[key] = persistedStore[key];

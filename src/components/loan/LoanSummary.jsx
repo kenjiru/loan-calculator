@@ -4,8 +4,7 @@ import { formatAmount } from 'src/util/amountUtil.js';
 import {
     Col,
     Container,
-    Label,
-    Row,
+    Row, Table,
 } from 'reactstrap';
 
 export class LoanSummary extends Component {
@@ -19,30 +18,47 @@ export class LoanSummary extends Component {
                         <h4>Loan Summary</h4>
                     </Col>
                 </Row>
+
                 <Row className="mb-2">
-                    <Col md="4">
-                        <Label>Total interest:</Label>
-                    </Col>
-                    <Col md="4">
-                        {formatAmount(loanStore.totalInterest)}
-                    </Col>
-                </Row>
-                <Row className="mb-2">
-                    <Col md="4">
-                        <Label>Fixed period interest</Label>
-                    </Col>
-                    <Col md="4">
-                        {formatAmount(loanStore.fixPeriodInterest)}
-                    </Col>
-                </Row>
-                <Row className="mb-2">
-                    <Col md="4">
-                        <Label>
-                            Total loan cost
-                        </Label>
-                    </Col>
-                    <Col md="4">
-                        {formatAmount(loanStore.totalLoanCost)}
+                    <Col md="12">
+                        <Table className="w-100" borderless>
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <td>Total interest</td>
+                                <td>Fix period interest</td>
+                                <td>Total loan costs</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th>Normal payment</th>
+                                <td>{formatAmount(loanStore.totalInterest)}</td>
+                                <td>{formatAmount(loanStore.fixPeriodInterest)}</td>
+                                <td>{formatAmount(loanStore.totalLoanCost)}</td>
+                            </tr>
+                            <tr className="text-primary">
+                                <th>One time repayment</th>
+                                <td>{formatAmount(loanStore.oneTimePayment.totalInterest)}</td>
+                                <td>{formatAmount(loanStore.oneTimePayment.fixPeriodInterest)}</td>
+                                <td>{formatAmount(loanStore.oneTimePayment.totalLoanCost)}</td>
+
+                            </tr>
+                            <tr className="text-warning">
+                                <th>Monthly repayment</th>
+                                <td>{formatAmount(loanStore.monthlyPayment.totalInterest)}</td>
+                                <td>{formatAmount(loanStore.monthlyPayment.fixPeriodInterest)}</td>
+                                <td>{formatAmount(loanStore.monthlyPayment.totalLoanCost)}</td>
+                            </tr>
+
+                            <tr className="text-info">
+                                <th>Yearly repayment</th>
+                                <td>{formatAmount(loanStore.yearlyPayment.totalInterest)}</td>
+                                <td>{formatAmount(loanStore.yearlyPayment.fixPeriodInterest)}</td>
+                                <td>{formatAmount(loanStore.yearlyPayment.totalLoanCost)}</td>
+                            </tr>
+                            </tbody>
+                        </Table>
                     </Col>
                 </Row>
             </Container>

@@ -22,7 +22,7 @@ class EarlyRepayment extends Component {
                     </Col>
                 </Row>
 
-                <Row className="mb-2">
+                <Row className="mb-2 text-primary">
                     <Col md="3">
                         <Label>One time payment</Label>
                     </Col>
@@ -32,7 +32,7 @@ class EarlyRepayment extends Component {
                             <InputGroupAddon addonType="prepend">
                                 <InputGroupText>
                                     <FontAwesomeIcon
-                                        icon="euro-sign"
+                                        icon="clock"
                                         size="sm"
                                     />
                                 </InputGroupText>
@@ -64,7 +64,7 @@ class EarlyRepayment extends Component {
                     </Col>
                 </Row>
 
-                <Row className="mb-2">
+                <Row className="mb-2 text-warning">
                     <Col md="3">
                         <Label>Monthly payments</Label>
                     </Col>
@@ -74,7 +74,7 @@ class EarlyRepayment extends Component {
                             <InputGroupAddon addonType="prepend">
                                 <InputGroupText>
                                     <FontAwesomeIcon
-                                        icon="euro-sign"
+                                        icon="clock"
                                         size="sm"
                                     />
                                 </InputGroupText>
@@ -92,7 +92,7 @@ class EarlyRepayment extends Component {
                             <InputGroupAddon addonType="prepend">
                                 <InputGroupText>
                                     <FontAwesomeIcon
-                                        icon="euro-sign"
+                                        icon="clock"
                                         size="sm"
                                     />
                                 </InputGroupText>
@@ -124,7 +124,7 @@ class EarlyRepayment extends Component {
                     </Col>
                 </Row>
 
-                <Row className="mb-2">
+                <Row className="mb-2 text-info">
                     <Col md="3">
                         <Label>Yearly payments</Label>
                     </Col>
@@ -134,7 +134,7 @@ class EarlyRepayment extends Component {
                             <InputGroupAddon addonType="prepend">
                                 <InputGroupText>
                                     <FontAwesomeIcon
-                                        icon="euro-sign"
+                                        icon="clock"
                                         size="sm"
                                     />
                                 </InputGroupText>
@@ -152,7 +152,7 @@ class EarlyRepayment extends Component {
                             <InputGroupAddon addonType="prepend">
                                 <InputGroupText>
                                     <FontAwesomeIcon
-                                        icon="euro-sign"
+                                        icon="clock"
                                         size="sm"
                                     />
                                 </InputGroupText>
