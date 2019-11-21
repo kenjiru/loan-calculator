@@ -1,17 +1,14 @@
 import React, { Component } from 'react';
 import {
     Col,
-    Container, Input,
-    InputGroup,
-    InputGroupAddon,
-    InputGroupText,
+    Container,
     Label,
     Row,
 } from 'reactstrap';
 import { inject, observer } from 'mobx-react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { updateLoanDetails } from 'src/store/LoanStore.js';
 import { formatAmount } from 'src/util/amountUtil.js';
+import { InputWithIcon } from 'src/components/input-with-icon/InputWithIcon.jsx';
 
 export class LoanData extends Component {
     render() {
@@ -31,20 +28,11 @@ export class LoanData extends Component {
                     </Col>
 
                     <Col md="4">
-                        <InputGroup>
-                            <InputGroupAddon addonType="prepend">
-                                <InputGroupText>
-                                    <FontAwesomeIcon
-                                        icon="euro-sign"
-                                        size="sm"
-                                    />
-                                </InputGroupText>
-                            </InputGroupAddon>
-                            <Input
-                                value={loanStore.financedAmount}
-                                onChange={this.handleFinancedAmountChange}
-                            />
-                        </InputGroup>
+                        <InputWithIcon
+                            icon="euro-sign"
+                            value={loanStore.financedAmount}
+                            onChange={this.handleFinancedAmountChange}
+                        />
                     </Col>
                 </Row>
 
@@ -63,20 +51,11 @@ export class LoanData extends Component {
                         <Label>Total duration <br />(years)</Label>
                     </Col>
                     <Col md="3">
-                        <InputGroup>
-                            <InputGroupAddon addonType="prepend">
-                                <InputGroupText>
-                                    <FontAwesomeIcon
-                                        icon="clock"
-                                        size="sm"
-                                    />
-                                </InputGroupText>
-                            </InputGroupAddon>
-                            <Input
-                                value={loanStore.duration}
-                                onChange={this.handleDurationChange}
-                            />
-                        </InputGroup>
+                        <InputWithIcon
+                            icon="clock"
+                            value={loanStore.duration}
+                            onChange={this.handleDurationChange}
+                        />
                     </Col>
                 </Row>
 
@@ -85,20 +64,11 @@ export class LoanData extends Component {
                         <Label>Fixed duration <br />(years)</Label>
                     </Col>
                     <Col md="3">
-                        <InputGroup>
-                            <InputGroupAddon addonType="prepend">
-                                <InputGroupText>
-                                    <FontAwesomeIcon
-                                        icon="clock"
-                                        size="sm"
-                                    />
-                                </InputGroupText>
-                            </InputGroupAddon>
-                            <Input
-                                value={loanStore.fixDuration}
-                                onChange={this.handleFixDurationChange}
-                            />
-                        </InputGroup>
+                        <InputWithIcon
+                            icon="clock"
+                            value={loanStore.fixDuration}
+                            onChange={this.handleFixDurationChange}
+                        />
                     </Col>
                 </Row>
 
@@ -108,21 +78,12 @@ export class LoanData extends Component {
                     </Col>
 
                     <Col md="3">
-                        <InputGroup>
-                            <InputGroupAddon addonType="prepend">
-                                <InputGroupText>
-                                    <FontAwesomeIcon
-                                        icon="percent"
-                                        size="sm"
-                                    />
-                                </InputGroupText>
-                            </InputGroupAddon>
-                            <Input
-                                placeholder="Interest rate"
-                                value={loanStore.interest}
-                                onChange={this.handleInterestChange}
-                            />
-                        </InputGroup>
+                        <InputWithIcon
+                            icon="percent"
+                            placeholder="Interest rate"
+                            value={loanStore.interest}
+                            onChange={this.handleInterestChange}
+                        />
                     </Col>
                 </Row>
 
@@ -132,20 +93,12 @@ export class LoanData extends Component {
                     </Col>
 
                     <Col md="3">
-                        <InputGroup>
-                            <InputGroupAddon addonType="prepend">
-                                <InputGroupText>
-                                    <FontAwesomeIcon
-                                        icon="percent"
-                                        size="sm"
-                                    />
-                                </InputGroupText>
-                            </InputGroupAddon>
-                            <Input
-                                value={loanStore.variableInterest}
-                                onChange={this.handleVariableInterestChange}
-                            />
-                        </InputGroup>
+                        <InputWithIcon
+                            icon="percent"
+                            placeholder="Interest rate"
+                            value={loanStore.variableInterest}
+                            onChange={this.handleVariableInterestChange}
+                        />
                     </Col>
                 </Row>
             </Container>

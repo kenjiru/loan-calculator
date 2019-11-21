@@ -104,7 +104,7 @@ export class TableBody extends Component {
         }
 
         return (
-            <span> \ {this.renderValue(value, storeType)}</span>
+            <span key={storeKey}> \ {this.renderValue(value, storeType)}</span>
         );
     }
 
@@ -112,7 +112,12 @@ export class TableBody extends Component {
         const className = VALUE_CLASS_NAME[storeType];
 
         return (
-            <span className={className}>{formatAmount(value)}</span>
+            <span
+                key={storeType}
+                className={className}
+            >
+                {formatAmount(value)}
+            </span>
         );
     }
 

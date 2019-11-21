@@ -86,7 +86,7 @@ export function getYearlyData(monthlyData) {
 }
 
 export function calculateMonthlyRate(principal, interest, period) {
-    interest = interest / 12; // / 360 * 365.25;
+    interest = interest / 12 / 360 * 365.25;
 
     return principal * interest * (
         Math.pow(1 + interest, period)) / (Math.pow(1 + interest, period) - 1

@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import {
     Col,
     Container,
-    Input, InputGroup, InputGroupAddon, InputGroupText,
     Label,
     Row,
 } from 'reactstrap';
 import { inject, observer } from 'mobx-react';
 import { updateLoanDetails } from 'src/store/LoanStore.js';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { InputWithIcon } from 'src/components/input-with-icon/InputWithIcon.jsx';
 
 class EarlyRepayment extends Component {
     render() {
@@ -28,39 +27,21 @@ class EarlyRepayment extends Component {
                     </Col>
 
                     <Col md="3">
-                        <InputGroup>
-                            <InputGroupAddon addonType="prepend">
-                                <InputGroupText>
-                                    <FontAwesomeIcon
-                                        icon="clock"
-                                        size="sm"
-                                    />
-                                </InputGroupText>
-                            </InputGroupAddon>
-                            <Input
-                                value={loanStore.oneTimePayment.month}
-                                placeholder="Month"
-                                onChange={this.handleOneTimePaymentMonthChange}
-                            />
-                        </InputGroup>
+                        <InputWithIcon
+                            icon="clock"
+                            value={loanStore.oneTimePayment.month}
+                            placeholder="Month"
+                            onChange={this.handleOneTimePaymentMonthChange}
+                        />
                     </Col>
 
                     <Col md="3">
-                        <InputGroup>
-                            <InputGroupAddon addonType="prepend">
-                                <InputGroupText>
-                                    <FontAwesomeIcon
-                                        icon="euro-sign"
-                                        size="sm"
-                                    />
-                                </InputGroupText>
-                            </InputGroupAddon>
-                            <Input
-                                value={loanStore.oneTimePayment.amount}
-                                placeholder="Amount"
-                                onChange={this.handleOneTimePaymentAmountChange}
-                            />
-                        </InputGroup>
+                        <InputWithIcon
+                            icon="euro-sign"
+                            value={loanStore.oneTimePayment.amount}
+                            placeholder="Amount"
+                            onChange={this.handleOneTimePaymentAmountChange}
+                        />
                     </Col>
                 </Row>
 
@@ -70,57 +51,30 @@ class EarlyRepayment extends Component {
                     </Col>
 
                     <Col md="3">
-                        <InputGroup>
-                            <InputGroupAddon addonType="prepend">
-                                <InputGroupText>
-                                    <FontAwesomeIcon
-                                        icon="clock"
-                                        size="sm"
-                                    />
-                                </InputGroupText>
-                            </InputGroupAddon>
-                            <Input
-                                value={loanStore.monthlyPayment.startMonth}
-                                placeholder="Start month"
-                                onChange={this.handleMonthlyPaymentStartMonthChange}
-                            />
-                        </InputGroup>
+                        <InputWithIcon
+                            icon="clock"
+                            value={loanStore.monthlyPayment.startMonth}
+                            placeholder="Start month"
+                            onChange={this.handleMonthlyPaymentStartMonthChange}
+                        />
                     </Col>
 
                     <Col md="3">
-                        <InputGroup>
-                            <InputGroupAddon addonType="prepend">
-                                <InputGroupText>
-                                    <FontAwesomeIcon
-                                        icon="clock"
-                                        size="sm"
-                                    />
-                                </InputGroupText>
-                            </InputGroupAddon>
-                            <Input
-                                value={loanStore.monthlyPayment.lengthMonths}
-                                placeholder="Length month"
-                                onChange={this.handleMonthlyPaymentLengthMonthsChange}
-                            />
-                        </InputGroup>
+                        <InputWithIcon
+                            icon="clock"
+                            value={loanStore.monthlyPayment.lengthMonths}
+                            placeholder="Length month"
+                            onChange={this.handleMonthlyPaymentLengthMonthsChange}
+                        />
                     </Col>
 
                     <Col md="3">
-                        <InputGroup>
-                            <InputGroupAddon addonType="prepend">
-                                <InputGroupText>
-                                    <FontAwesomeIcon
-                                        icon="euro-sign"
-                                        size="sm"
-                                    />
-                                </InputGroupText>
-                            </InputGroupAddon>
-                            <Input
-                                value={loanStore.monthlyPayment.amount}
-                                placeholder="Amount"
-                                onChange={this.handleMonthlyPaymentAmountChange}
-                            />
-                        </InputGroup>
+                        <InputWithIcon
+                            icon="euro-sign"
+                            value={loanStore.monthlyPayment.amount}
+                            placeholder="Amount"
+                            onChange={this.handleMonthlyPaymentAmountChange}
+                        />
                     </Col>
                 </Row>
 
@@ -130,57 +84,30 @@ class EarlyRepayment extends Component {
                     </Col>
 
                     <Col md="3">
-                        <InputGroup>
-                            <InputGroupAddon addonType="prepend">
-                                <InputGroupText>
-                                    <FontAwesomeIcon
-                                        icon="clock"
-                                        size="sm"
-                                    />
-                                </InputGroupText>
-                            </InputGroupAddon>
-                            <Input
-                                value={loanStore.yearlyPayment.startYear}
-                                placeholder="Start year"
-                                onChange={this.handleYearlyPaymentStartYearChange}
-                            />
-                        </InputGroup>
+                        <InputWithIcon
+                            icon="clock"
+                            value={loanStore.yearlyPayment.startYear}
+                            placeholder="Start year"
+                            onChange={this.handleYearlyPaymentStartYearChange}
+                        />
                     </Col>
 
                     <Col md="3">
-                        <InputGroup>
-                            <InputGroupAddon addonType="prepend">
-                                <InputGroupText>
-                                    <FontAwesomeIcon
-                                        icon="clock"
-                                        size="sm"
-                                    />
-                                </InputGroupText>
-                            </InputGroupAddon>
-                            <Input
-                                value={loanStore.yearlyPayment.lengthYears}
-                                placeholder="Length years"
-                                onChange={this.handleYearlyPaymentLengthYearsChange}
-                            />
-                        </InputGroup>
+                        <InputWithIcon
+                            icon="clock"
+                            value={loanStore.yearlyPayment.lengthYears}
+                            placeholder="Length years"
+                            onChange={this.handleYearlyPaymentLengthYearsChange}
+                        />
                     </Col>
 
                     <Col md="3">
-                        <InputGroup>
-                            <InputGroupAddon addonType="prepend">
-                                <InputGroupText>
-                                    <FontAwesomeIcon
-                                        icon="euro-sign"
-                                        size="sm"
-                                    />
-                                </InputGroupText>
-                            </InputGroupAddon>
-                            <Input
-                                value={loanStore.yearlyPayment.amount}
-                                placeholder="Amount"
-                                onChange={this.handleYearlyPaymentAmountChange}
-                            />
-                        </InputGroup>
+                        <InputWithIcon
+                            icon="euro-sign"
+                            value={loanStore.yearlyPayment.amount}
+                            placeholder="Amount"
+                            onChange={this.handleYearlyPaymentAmountChange}
+                        />
                     </Col>
                 </Row>
             </Container>
