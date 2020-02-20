@@ -1,14 +1,43 @@
 import _ from 'lodash';
-import { PAYMENT_TYPE } from 'src/store/LoanStore.js';
+import { PAYMENT_TYPE } from 'src/store/LoanStore';
 
-export function getLoanData(principal, interest, period, fixPeriod, variableInterest, repayment = {}) {
+export interface Repayment {
+    paymentType: any;
+    amount: number;
+    month: number;
+    startMonth: number;
+    lengthMonths: number;
+    startYear: number;
+    lengthYears: number;
+}
+
+export interface BalanceInfo {
+    index: string;
+    repayment: number;
+    interest: number;
+    principal: number;
+    newBalance: number;
+}
+
+export function getLoanData(
+    principal: number,
+    interest: number,
+    period: number,
+    fixPeriod: number,
+    variableInterest: number,
+    repayment: Repayment = {} as Repayment,
+): {
+    monthlyData: BalanceInfo[];
+    totalInterest: number;
+    fixPeriodInterest: number;
+} {
     let totalInterest = 0;
     let fixPeriodInterest = 0;
     let monthlyRate = calculateMonthlyRate(principal, interest, period);
 
-    const monthlyData = _
+    const monthlyData: BalanceInfo[] = _
         .range(period)
-        .map(index => {
+        .map((index: number): BalanceInfo => {
             if (index + 1 === fixPeriod) {
                 interest = variableInterest;
                 monthlyRate = calculateMonthlyRate(principal, interest, period - index);
@@ -65,8 +94,8 @@ export function getLoanData(principal, interest, period, fixPeriod, variableInte
     };
 }
 
-export function getYearlyData(monthlyData) {
-    return _.reduce(monthlyData, (yearlyData, month, index) => {
+export function getYearlyData(monthlyData: BalanceInfo[]): BalanceInfo[] {
+    return _.reduce(monthlyData, (yearlyData: BalanceInfo[], month: BalanceInfo, index: number) => {
         const yearIndex = Math.floor(index / 12);
 
         if (yearlyData[yearIndex] === undefined) {
@@ -85,7 +114,7 @@ export function getYearlyData(monthlyData) {
     }, []);
 }
 
-export function calculateMonthlyRate(principal, interest, period) {
+export function calculateMonthlyRate(principal: number, interest: number, period: number) {
     interest = interest / 12 / 360 * 365.25;
 
     return principal * interest * (

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { ChangeEvent, Component } from 'react';
 import {
     Col,
     Container,
@@ -9,9 +9,13 @@ import {
 } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { inject, observer } from 'mobx-react';
-import { updateLoanDetails } from 'src/store/LoanStore.js';
+import { updateLoanDetails } from 'src/store/LoanStore';
 
-class PropertyData extends Component {
+interface Props {
+    loanStore?: any;
+}
+
+class PropertyData extends Component<Props> {
     render() {
         const { loanStore } = this.props;
 
@@ -72,7 +76,7 @@ class PropertyData extends Component {
         );
     }
 
-    handlePurchasePriceChange = (ev) => {
+    handlePurchasePriceChange = (ev: ChangeEvent<HTMLInputElement>) => {
         const { loanStore } = this.props;
 
         loanStore.purchasePrice = ev.target.value;
@@ -80,7 +84,7 @@ class PropertyData extends Component {
         updateLoanDetails();
     };
 
-    handleOwnCapitalChange = (ev) => {
+    handleOwnCapitalChange = (ev: ChangeEvent<HTMLInputElement>) => {
         const { loanStore } = this.props;
 
         loanStore.ownCapital = ev.target.value;

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { ChangeEvent, Component } from 'react';
 import {
     Col,
     Container,
@@ -7,11 +7,15 @@ import {
     Row,
 } from 'reactstrap';
 import { inject, observer } from 'mobx-react';
-import { updateLoanDetails } from 'src/store/LoanStore.js';
-import { formatAmount } from 'src/util/amountUtil.js';
+import { updateLoanDetails } from 'src/store/LoanStore';
+import { formatAmount } from 'src/util/amountUtil';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-class PropertyTaxes extends Component {
+interface Props {
+    loanStore?: any;
+}
+
+class PropertyTaxes extends Component<Props> {
     render() {
         const { loanStore } = this.props;
 
@@ -106,7 +110,7 @@ class PropertyTaxes extends Component {
         );
     }
 
-    handleNotaryFeeChange = (ev) => {
+    handleNotaryFeeChange = (ev: ChangeEvent<HTMLInputElement>) => {
         const { loanStore } = this.props;
 
         loanStore.notaryFee = ev.target.value;
@@ -114,7 +118,7 @@ class PropertyTaxes extends Component {
         updateLoanDetails();
     };
 
-    handleEstateAgentFeeChange = (ev) => {
+    handleEstateAgentFeeChange = (ev: ChangeEvent<HTMLInputElement>) => {
         const { loanStore } = this.props;
 
         loanStore.estateAgentFee = ev.target.value;

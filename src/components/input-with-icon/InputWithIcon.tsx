@@ -1,8 +1,17 @@
-import React  from 'react';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import React, { ChangeEventHandler, FC } from 'react';
 import { Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export const InputWithIcon = ({ icon, value, placeholder, onChange, disabled }) => (
+interface Props {
+    icon: IconProp;
+    value: number|string;
+    placeholder?: string;
+    onChange?: ChangeEventHandler<HTMLInputElement>;
+    disabled?: boolean;
+}
+
+export const InputWithIcon: FC<Props> = ({ icon, value, placeholder, onChange, disabled }) => (
     <InputGroup>
         <InputGroupAddon addonType="prepend">
             <InputGroupText>

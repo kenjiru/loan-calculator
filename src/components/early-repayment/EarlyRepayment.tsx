@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { ChangeEvent, Component } from 'react';
 import {
     Col,
     Container,
@@ -6,10 +6,14 @@ import {
     Row,
 } from 'reactstrap';
 import { inject, observer } from 'mobx-react';
-import { updateLoanDetails } from 'src/store/LoanStore.js';
-import { InputWithIcon } from 'src/components/input-with-icon/InputWithIcon.jsx';
+import { updateLoanDetails } from 'src/store/LoanStore';
+import { InputWithIcon } from 'src/components/input-with-icon/InputWithIcon';
 
-class EarlyRepayment extends Component {
+interface Props {
+    loanStore?: any;
+}
+
+class EarlyRepayment extends Component<Props> {
     render() {
         const { loanStore } = this.props;
 
@@ -114,7 +118,7 @@ class EarlyRepayment extends Component {
         );
     }
 
-    handleOneTimePaymentMonthChange = (ev) => {
+    handleOneTimePaymentMonthChange = (ev: ChangeEvent<HTMLInputElement>) => {
         const { loanStore } = this.props;
 
         loanStore.oneTimePayment.month = ev.target.value;
@@ -122,7 +126,7 @@ class EarlyRepayment extends Component {
         updateLoanDetails();
     };
 
-    handleOneTimePaymentAmountChange = (ev) => {
+    handleOneTimePaymentAmountChange = (ev: ChangeEvent<HTMLInputElement>) => {
         const { loanStore } = this.props;
 
         loanStore.oneTimePayment.amount = ev.target.value;
@@ -130,7 +134,7 @@ class EarlyRepayment extends Component {
         updateLoanDetails();
     };
 
-    handleMonthlyPaymentStartMonthChange = (ev) => {
+    handleMonthlyPaymentStartMonthChange = (ev: ChangeEvent<HTMLInputElement>) => {
         const { loanStore } = this.props;
 
         loanStore.monthlyPayment.startMonth = ev.target.value;
@@ -138,7 +142,7 @@ class EarlyRepayment extends Component {
         updateLoanDetails();
     };
 
-    handleMonthlyPaymentLengthMonthsChange = (ev) => {
+    handleMonthlyPaymentLengthMonthsChange = (ev: ChangeEvent<HTMLInputElement>) => {
         const { loanStore } = this.props;
 
         loanStore.monthlyPayment.lengthMonths = ev.target.value;
@@ -146,7 +150,7 @@ class EarlyRepayment extends Component {
         updateLoanDetails();
     };
 
-    handleMonthlyPaymentAmountChange = (ev) => {
+    handleMonthlyPaymentAmountChange = (ev: ChangeEvent<HTMLInputElement>) => {
         const { loanStore } = this.props;
 
         loanStore.monthlyPayment.amount = ev.target.value;
@@ -154,7 +158,7 @@ class EarlyRepayment extends Component {
         updateLoanDetails();
     };
 
-    handleYearlyPaymentStartYearChange = (ev) => {
+    handleYearlyPaymentStartYearChange = (ev: ChangeEvent<HTMLInputElement>) => {
         const { loanStore } = this.props;
 
         loanStore.yearlyPayment.startYear = ev.target.value;
@@ -162,7 +166,7 @@ class EarlyRepayment extends Component {
         updateLoanDetails();
     };
 
-    handleYearlyPaymentLengthYearsChange = (ev) => {
+    handleYearlyPaymentLengthYearsChange = (ev: ChangeEvent<HTMLInputElement>) => {
         const { loanStore } = this.props;
 
         loanStore.yearlyPayment.lengthYears = ev.target.value;
@@ -170,7 +174,7 @@ class EarlyRepayment extends Component {
         updateLoanDetails();
     };
 
-    handleYearlyPaymentAmountChange = (ev) => {
+    handleYearlyPaymentAmountChange = (ev: ChangeEvent<HTMLInputElement>) => {
         const { loanStore } = this.props;
 
         loanStore.yearlyPayment.amount = ev.target.value;

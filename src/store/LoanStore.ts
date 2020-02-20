@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { observable, toJS } from 'mobx';
 import store from 'store';
-import { getLoanData, getYearlyData } from 'src/util/loanUtil.js';
+import { getLoanData, getYearlyData } from 'src/util/loanUtil';
 
 const LOCAL_STORAGE_KEY = 'loan-calculator';
 
@@ -76,8 +76,8 @@ export const loanStore = observable({
 const MORTGAGE_REGISTRATION_PERCENTAGE = 0.012;
 
 export function updateLoanDetails() {
-    const purchasePrice = parseFloat(loanStore.purchasePrice);
-    const ownCapital = parseFloat(loanStore.ownCapital);
+    const purchasePrice = loanStore.purchasePrice;
+    const ownCapital = loanStore.ownCapital;
 
     loanStore.propertyTransferTax = purchasePrice * 0.035;
     loanStore.ownershipRegistrationTax = purchasePrice * 0.011;
@@ -85,8 +85,8 @@ export function updateLoanDetails() {
     loanStore.minimumAmount = purchasePrice - ownCapital +
         loanStore.propertyTransferTax +
         loanStore.ownershipRegistrationTax +
-        parseFloat(loanStore.notaryFee) +
-        parseFloat(loanStore.estateAgentFee);
+        loanStore.notaryFee +
+        loanStore.estateAgentFee;
 
     loanStore.mortgageRegistrationTax = loanStore.financedAmount *
         MORTGAGE_REGISTRATION_PERCENTAGE * loanStore.mortgageRegistrationReferencePercentage / 100;
@@ -108,22 +108,22 @@ export function updateLoanDetails() {
 
 function calculateNormalPaymentResult() {
     const result = getLoanData(
-        parseFloat(loanStore.financedAmount),
-        parseFloat(loanStore.interest) / 100,
-        parseInt(loanStore.duration) * 12,
-        parseInt(loanStore.fixDuration) * 12,
-        parseFloat(loanStore.variableInterest) / 100,
+        loanStore.financedAmount,
+        loanStore.interest / 100,
+        loanStore.duration * 12,
+        loanStore.fixDuration * 12,
+        loanStore.variableInterest / 100,
     );
 
-    loanStore.monthlyData = result.monthlyData;
-    loanStore.yearlyData = getYearlyData(loanStore.monthlyData);
+    loanStore.monthlyData = result.monthlyData as any;
+    loanStore.yearlyData = getYearlyData(loanStore.monthlyData) as any;
     loanStore.totalInterest = result.totalInterest;
     loanStore.fixPeriodInterest = result.fixPeriodInterest;
     loanStore.totalLoanCost = result.totalInterest +
-        parseFloat(loanStore.monthlyFee) * parseInt(loanStore.duration) * 12 +
-        parseFloat(loanStore.contractFee) +
-        parseFloat(loanStore.evaluationFee) +
-        parseFloat(loanStore.mortgageRegistrationTax);
+        loanStore.monthlyFee * loanStore.duration * 12 +
+        loanStore.contractFee +
+        loanStore.evaluationFee +
+        loanStore.mortgageRegistrationTax;
 }
 
 export const PAYMENT_TYPE = {
@@ -138,27 +138,27 @@ function calculateOneTimePaymentResult() {
     }
 
     const result = getLoanData(
-        parseFloat(loanStore.financedAmount),
-        parseFloat(loanStore.interest) / 100,
-        parseInt(loanStore.duration) * 12,
-        parseInt(loanStore.fixDuration) * 12,
-        parseFloat(loanStore.variableInterest) / 100,
+        loanStore.financedAmount,
+        loanStore.interest / 100,
+        loanStore.duration * 12,
+        loanStore.fixDuration * 12,
+        loanStore.variableInterest / 100,
         {
             paymentType: PAYMENT_TYPE.ONE_TIME,
-            month: parseInt(loanStore.oneTimePayment.month),
-            amount: parseFloat(loanStore.oneTimePayment.amount),
-        },
+            month: loanStore.oneTimePayment.month,
+            amount: loanStore.oneTimePayment.amount,
+        } as any,
     );
 
-    loanStore.oneTimePayment.monthlyData = result.monthlyData;
-    loanStore.oneTimePayment.yearlyData = getYearlyData(loanStore.oneTimePayment.monthlyData);
+    loanStore.oneTimePayment.monthlyData = result.monthlyData as any;
+    loanStore.oneTimePayment.yearlyData = getYearlyData(loanStore.oneTimePayment.monthlyData) as any;
     loanStore.oneTimePayment.totalInterest = result.totalInterest;
     loanStore.oneTimePayment.fixPeriodInterest = result.fixPeriodInterest;
     loanStore.oneTimePayment.totalLoanCost = result.totalInterest +
-        parseFloat(loanStore.monthlyFee) * parseInt(loanStore.duration) * 12 +
-        parseFloat(loanStore.contractFee) +
-        parseFloat(loanStore.evaluationFee) +
-        parseFloat(loanStore.mortgageRegistrationTax);
+        loanStore.monthlyFee * loanStore.duration * 12 +
+        loanStore.contractFee +
+        loanStore.evaluationFee +
+        loanStore.mortgageRegistrationTax;
 }
 
 function calculateMonthlyPaymentResult() {
@@ -170,28 +170,28 @@ function calculateMonthlyPaymentResult() {
     }
 
     const result = getLoanData(
-        parseFloat(loanStore.financedAmount),
-        parseFloat(loanStore.interest) / 100,
-        parseInt(loanStore.duration) * 12,
-        parseInt(loanStore.fixDuration) * 12,
-        parseFloat(loanStore.variableInterest) / 100,
+        loanStore.financedAmount,
+        loanStore.interest / 100,
+        loanStore.duration * 12,
+        loanStore.fixDuration * 12,
+        loanStore.variableInterest / 100,
         {
             paymentType: PAYMENT_TYPE.MONTHLY,
-            startMonth: parseInt(loanStore.monthlyPayment.startMonth),
-            lengthMonths: parseInt(loanStore.monthlyPayment.lengthMonths),
-            amount: parseFloat(loanStore.monthlyPayment.amount),
-        },
+            startMonth: loanStore.monthlyPayment.startMonth,
+            lengthMonths: loanStore.monthlyPayment.lengthMonths,
+            amount: loanStore.monthlyPayment.amount,
+        } as any,
     );
 
-    loanStore.monthlyPayment.monthlyData = result.monthlyData;
-    loanStore.monthlyPayment.yearlyData = getYearlyData(loanStore.monthlyPayment.monthlyData);
+    loanStore.monthlyPayment.monthlyData = result.monthlyData as any;
+    loanStore.monthlyPayment.yearlyData = getYearlyData(loanStore.monthlyPayment.monthlyData) as any;
     loanStore.monthlyPayment.totalInterest = result.totalInterest;
     loanStore.monthlyPayment.fixPeriodInterest = result.fixPeriodInterest;
     loanStore.monthlyPayment.totalLoanCost = result.totalInterest +
-        parseFloat(loanStore.monthlyFee) * parseInt(loanStore.duration) * 12 +
-        parseFloat(loanStore.contractFee) +
-        parseFloat(loanStore.evaluationFee) +
-        parseFloat(loanStore.mortgageRegistrationTax);
+        loanStore.monthlyFee * loanStore.duration * 12 +
+        loanStore.contractFee +
+        loanStore.evaluationFee +
+        loanStore.mortgageRegistrationTax;
 
     console.log(toJS(loanStore.monthlyPayment));
 }
@@ -206,28 +206,28 @@ function calculateYearlyPaymentResult() {
     }
 
     const result = getLoanData(
-        parseFloat(loanStore.financedAmount),
-        parseFloat(loanStore.interest) / 100,
-        parseInt(loanStore.duration) * 12,
-        parseInt(loanStore.fixDuration) * 12,
-        parseFloat(loanStore.variableInterest) / 100,
+        loanStore.financedAmount,
+        loanStore.interest / 100,
+        loanStore.duration * 12,
+        loanStore.fixDuration * 12,
+        loanStore.variableInterest / 100,
         {
             paymentType: PAYMENT_TYPE.YEARLY,
-            startYear: parseInt(loanStore.yearlyPayment.startYear),
-            lengthYears: parseInt(loanStore.yearlyPayment.lengthYears),
-            amount: parseFloat(loanStore.yearlyPayment.amount),
-        },
+            startYear: loanStore.yearlyPayment.startYear,
+            lengthYears: loanStore.yearlyPayment.lengthYears,
+            amount: loanStore.yearlyPayment.amount,
+        } as any,
     );
 
-    loanStore.yearlyPayment.monthlyData = result.monthlyData;
-    loanStore.yearlyPayment.yearlyData = getYearlyData(loanStore.yearlyPayment.monthlyData);
+    loanStore.yearlyPayment.monthlyData = result.monthlyData as any;
+    loanStore.yearlyPayment.yearlyData = getYearlyData(loanStore.yearlyPayment.monthlyData) as any;
     loanStore.yearlyPayment.totalInterest = result.totalInterest;
     loanStore.yearlyPayment.fixPeriodInterest = result.fixPeriodInterest;
     loanStore.yearlyPayment.totalLoanCost = result.totalInterest +
-        parseFloat(loanStore.monthlyFee) * parseInt(loanStore.duration) * 12 +
-        parseFloat(loanStore.contractFee) +
-        parseFloat(loanStore.evaluationFee) +
-        parseFloat(loanStore.mortgageRegistrationTax);
+        loanStore.monthlyFee * loanStore.duration * 12 +
+        loanStore.contractFee +
+        loanStore.evaluationFee +
+        loanStore.mortgageRegistrationTax;
 
     console.log(toJS(loanStore.yearlyPayment));
 }
@@ -243,7 +243,8 @@ export function restoreFromLocalStore() {
         return;
     }
 
-    Object.keys(persistedStore).forEach(key => {
+    Object.keys(persistedStore).forEach((key: string) => {
+        // @ts-ignore
         loanStore[key] = persistedStore[key];
     });
 }

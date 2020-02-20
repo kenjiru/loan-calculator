@@ -1,11 +1,11 @@
 import _ from 'lodash';
 import className from 'classnames';
-import React, { Component } from 'react';
-import { TableRow } from 'src/components/amortization-schedule/TableRow.jsx';
+import React, { Component, ReactNode } from 'react';
 import { inject, observer } from 'mobx-react';
-import { isYearSelected, toggleYear } from 'src/store/UiStore.js';
+import { TableRow } from 'src/components/amortization-schedule/TableRow';
+import { isYearSelected, toggleYear } from 'src/store/UiStore';
+import { formatAmount } from 'src/util/amountUtil';
 import './TableBody.css';
-import { formatAmount } from 'src/util/amountUtil.js';
 
 const MONTHS_IN_YEAR = 12;
 
@@ -23,7 +23,11 @@ const VALUE_CLASS_NAME = {
     [STORE_TYPE.YEARLY]: 'text-info',
 };
 
-export class TableBody extends Component {
+interface Props {
+    loanStore?: any;
+}
+
+export class TableBody extends Component<Props> {
     render() {
         return (
             <tbody>
@@ -49,7 +53,7 @@ export class TableBody extends Component {
             ));
     }
 
-    renderMonthlyData(yearIndex) {
+    renderMonthlyData(yearIndex: number) {
         if (isYearSelected(yearIndex) === false) {
             return null;
         }
@@ -63,7 +67,13 @@ export class TableBody extends Component {
             ));
     }
 
-    getData(storeName, rowIndex) {
+    getData(storeName: string, rowIndex: number): {
+        index: string;
+        repayment: Array<ReactNode>;
+        interest: Array<ReactNode>;
+        principal: Array<ReactNode>;
+        newBalance: Array<ReactNode>;
+    } {
         const indexPrefix = storeName === 'yearlyData' ? 'Year' : 'Month';
 
         return {
@@ -75,7 +85,7 @@ export class TableBody extends Component {
         };
     }
 
-    getStoreValues(storeName, index, storeKey) {
+    getStoreValues(storeName: string, index: number, storeKey: string): Array<ReactNode> {
         const { loanStore } = this.props;
         const yearlyData = loanStore[storeName];
         const oneTimeData = loanStore.oneTimePayment[storeName];
@@ -92,7 +102,7 @@ export class TableBody extends Component {
         ];
     }
 
-    renderStoreValue(initialValue, store, index, storeKey, storeType) {
+    renderStoreValue(initialValue: number, store: any, index: number, storeKey: string, storeType: string) {
         if (_.isEmpty(store)) {
             return null;
         }
@@ -108,7 +118,7 @@ export class TableBody extends Component {
         );
     }
 
-    renderValue(value, storeType) {
+    renderValue(value: string, storeType: string) {
         const className = VALUE_CLASS_NAME[storeType];
 
         return (
@@ -121,13 +131,13 @@ export class TableBody extends Component {
         );
     }
 
-    getMonthDataForYear(monthlyData, yearIndex) {
+    getMonthDataForYear(monthlyData: Array<any>, yearIndex: number) {
         return _.filter(monthlyData,
             (month, index) => Math.floor(index / MONTHS_IN_YEAR) === yearIndex,
         );
     }
 
-    getYearRowClassName(yearIndex) {
+    getYearRowClassName(yearIndex: number) {
         return className('year-row', {
             'table-primary': isYearSelected(yearIndex),
         });

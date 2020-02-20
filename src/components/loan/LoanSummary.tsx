@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
-import { formatAmount } from 'src/util/amountUtil.js';
+import { formatAmount } from 'src/util/amountUtil';
 import {
     Col,
     Container,
     Row, Table,
 } from 'reactstrap';
 
-export class LoanSummary extends Component {
+interface Props {
+    loanStore?: any;
+}
+
+export class LoanSummary extends Component<Props> {
     render() {
         const { loanStore } = this.props;
 

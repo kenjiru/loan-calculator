@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { ChangeEvent, Component } from 'react';
 import {
     Col,
     Container,
@@ -6,11 +6,15 @@ import {
     Row,
 } from 'reactstrap';
 import { inject, observer } from 'mobx-react';
-import { updateLoanDetails } from 'src/store/LoanStore.js';
-import { roundAmount } from 'src/util/amountUtil.js';
-import { InputWithIcon } from 'src/components/input-with-icon/InputWithIcon.jsx';
+import { updateLoanDetails } from 'src/store/LoanStore';
+import { roundAmount } from 'src/util/amountUtil';
+import { InputWithIcon } from 'src/components/input-with-icon/InputWithIcon';
 
-class LoanFees extends Component {
+interface Props {
+    loanStore?: any;
+}
+
+class LoanFees extends Component<Props> {
     render() {
         const { loanStore } = this.props;
 
@@ -132,7 +136,7 @@ class LoanFees extends Component {
         );
     }
 
-    handleMonthlyFeeChange = (ev) => {
+    handleMonthlyFeeChange = (ev: ChangeEvent<HTMLInputElement>) => {
         const { loanStore } = this.props;
 
         loanStore.monthlyFee = ev.target.value;
@@ -140,7 +144,7 @@ class LoanFees extends Component {
         updateLoanDetails();
     };
 
-    handleContractFeeChange = (ev) => {
+    handleContractFeeChange = (ev: ChangeEvent<HTMLInputElement>) => {
         const { loanStore } = this.props;
 
         loanStore.contractFee = ev.target.value;
@@ -148,7 +152,7 @@ class LoanFees extends Component {
         updateLoanDetails();
     };
 
-    handleContractFeePercentageChange = (ev) => {
+    handleContractFeePercentageChange = (ev: ChangeEvent<HTMLInputElement>) => {
         const { loanStore } = this.props;
 
         loanStore.contractFeePercentage = ev.target.value;
@@ -156,7 +160,7 @@ class LoanFees extends Component {
         updateLoanDetails();
     };
 
-    handleEvaluationFeeChange = (ev) => {
+    handleEvaluationFeeChange = (ev: ChangeEvent<HTMLInputElement>) => {
         const { loanStore } = this.props;
 
         loanStore.evaluationFee = ev.target.value;
@@ -164,7 +168,7 @@ class LoanFees extends Component {
         updateLoanDetails();
     };
 
-    handleEvaluationFeePercentageChange = (ev) => {
+    handleEvaluationFeePercentageChange = (ev: ChangeEvent<HTMLInputElement>) => {
         const { loanStore } = this.props;
 
         loanStore.evaluationFeePercentage = ev.target.value;
@@ -172,7 +176,7 @@ class LoanFees extends Component {
         updateLoanDetails();
     };
 
-    handleMortgageRegistrationReferencePercentageChange = (ev) => {
+    handleMortgageRegistrationReferencePercentageChange = (ev: ChangeEvent<HTMLInputElement>) => {
         const { loanStore } = this.props;
 
         loanStore.mortgageRegistrationReferencePercentage = ev.target.value;
@@ -180,7 +184,7 @@ class LoanFees extends Component {
         updateLoanDetails();
     };
 
-    handleMortgageRegistrationTaxChange = (ev) => {
+    handleMortgageRegistrationTaxChange = (ev: ChangeEvent<HTMLInputElement>) => {
         const { loanStore } = this.props;
 
         loanStore.mortgageRegistrationTax = ev.target.value;
@@ -188,7 +192,7 @@ class LoanFees extends Component {
         updateLoanDetails();
     };
 
-    handleOtherBankFeesChange = (ev) => {
+    handleOtherBankFeesChange = (ev: ChangeEvent<HTMLInputElement>) => {
         const { loanStore } = this.props;
 
         loanStore.otherBankFees = ev.target.value;

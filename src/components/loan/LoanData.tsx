@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { ChangeEvent, Component } from 'react';
 import {
     Col,
     Container,
@@ -6,11 +6,15 @@ import {
     Row,
 } from 'reactstrap';
 import { inject, observer } from 'mobx-react';
-import { updateLoanDetails } from 'src/store/LoanStore.js';
-import { formatAmount } from 'src/util/amountUtil.js';
-import { InputWithIcon } from 'src/components/input-with-icon/InputWithIcon.jsx';
+import { updateLoanDetails } from 'src/store/LoanStore';
+import { formatAmount } from 'src/util/amountUtil';
+import { InputWithIcon } from 'src/components/input-with-icon/InputWithIcon';
 
-export class LoanData extends Component {
+interface Props {
+    loanStore?: any;
+}
+
+export class LoanData extends Component<Props> {
     render() {
         const { loanStore } = this.props;
 
@@ -105,7 +109,7 @@ export class LoanData extends Component {
         );
     }
 
-    handleFinancedAmountChange = (ev) => {
+    handleFinancedAmountChange = (ev: ChangeEvent<HTMLInputElement>) => {
         const { loanStore } = this.props;
 
         loanStore.financedAmount = ev.target.value;
@@ -113,7 +117,7 @@ export class LoanData extends Component {
         updateLoanDetails();
     };
 
-    handleInterestChange = (ev) => {
+    handleInterestChange = (ev: ChangeEvent<HTMLInputElement>) => {
         const { loanStore } = this.props;
 
         loanStore.interest = ev.target.value;
@@ -121,7 +125,7 @@ export class LoanData extends Component {
         updateLoanDetails();
     };
 
-    handleVariableInterestChange = (ev) => {
+    handleVariableInterestChange = (ev: ChangeEvent<HTMLInputElement>) => {
         const { loanStore } = this.props;
 
         loanStore.variableInterest = ev.target.value;
@@ -129,7 +133,7 @@ export class LoanData extends Component {
         updateLoanDetails();
     };
 
-    handleDurationChange = (ev) => {
+    handleDurationChange = (ev: ChangeEvent<HTMLInputElement>) => {
         const { loanStore } = this.props;
 
         loanStore.duration = ev.target.value;
@@ -137,7 +141,7 @@ export class LoanData extends Component {
         updateLoanDetails();
     };
 
-    handleFixDurationChange = (ev) => {
+    handleFixDurationChange = (ev: ChangeEvent<HTMLInputElement>) => {
         const { loanStore } = this.props;
 
         loanStore.fixDuration = ev.target.value;

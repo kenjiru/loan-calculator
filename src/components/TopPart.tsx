@@ -1,17 +1,22 @@
 import React, { Component } from 'react';
 import { Alert, Col, Collapse, Container, Row } from 'reactstrap';
 import { inject, observer } from 'mobx-react';
-import { formatAmount } from 'src/util/amountUtil.js';
-import { SECTION, toggleSection } from 'src/store/UiStore.js';
-import { PropertyDataContainer } from 'src/components/property/PropertyData.jsx';
-import { LoanSummaryContainer } from 'src/components/loan/LoanSummary.jsx';
-import { LoanFeesContainer } from 'src/components/loan/LoanFees.jsx';
-import { PropertyTaxesContainer } from 'src/components/property/PropertyTaxes.jsx';
-import { LoanDataContainer } from 'src/components/loan/LoanData.jsx';
-import { EarlyRepaymentContainer } from 'src/components/early-repayment/EarlyRepayment.jsx';
+import { formatAmount } from 'src/util/amountUtil';
+import { SECTION, toggleSection } from 'src/store/UiStore';
+import { PropertyDataContainer } from 'src/components/property/PropertyData';
+import { LoanSummaryContainer } from 'src/components/loan/LoanSummary';
+import { LoanFeesContainer } from 'src/components/loan/LoanFees';
+import { PropertyTaxesContainer } from 'src/components/property/PropertyTaxes';
+import { LoanDataContainer } from 'src/components/loan/LoanData';
+import { EarlyRepaymentContainer } from 'src/components/early-repayment/EarlyRepayment';
 import './TopPart.css';
 
-export class TopPart extends Component {
+interface Props {
+    uiStore?: any;
+    loanStore?: any;
+}
+
+export class TopPart extends Component<Props> {
     state = {
         selectedSection: SECTION.PROPERTY,
     };
